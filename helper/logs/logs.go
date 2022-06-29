@@ -71,7 +71,7 @@ func (app *LogParams) Write() {
 		"hreq":        app.Header,
 		"breq":        util.TruncateText(util.ToString(app.Request)),
 		"bres":        util.TruncateText(util.ToString(app.Response)),
-		"err":         util.ReplaceAllString(app.Error),
+		"err":         util.SigleLine(app.Error),
 		"elapsedtime": time.Since(app.Begin).String(),
 	}).Info(config.Get().Owner)
 }

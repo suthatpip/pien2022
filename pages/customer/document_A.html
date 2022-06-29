@@ -338,7 +338,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                   <tr>
                                                     <th>ลำดับที่</th>
                                                     <th>ชนิดเอกสาร</th> 
-                                                    <th>วันที่ประกาศ</th>
+                                                    <th>เริ่มประกาศ</th>
+                                                    <th>สิ้นสุดประกาศ</th>
                                                     <th>ราคา</th>
                                                   </tr>
                                                   </thead>
@@ -346,10 +347,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                   
                                                    
                                                   <tr>
-                                                    <td>1</td>
-                                                    <td>Grown Ups Blue Ray</td> 
-                                                    <td>Tousled lomo letterpress</td>
-                                                    <td>$25.99</td>
+                                                    <td>{{.no}}</td>
+                                                    <td>{{.product}}</td> 
+                                                    <td>{{.start_date}}</td>
+                                                    <td>{{.end_date}}</td>
+                                                    <td>{{.sum_price}}</td>
                                                   </tr>
 
 
@@ -576,7 +578,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 "startDate": moment( today , formatDate).format('LL') ,
                 "endDate":moment( today , formatDate).format('LL'),
-                "minDate": today
+                "minDate": moment( today , formatDate).format('LL') 
             });
     
             $('input[data-publish-date="publish-date"]').on('apply.daterangepicker', function(ev, picker) {
@@ -614,13 +616,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
           })
           .then(response => response.json())
           .then(data => {
-              editor.setData(data.detail) 
+             console.log(data.customer.name);
+             console.log(data.customer.address);
+             console.log(data.customer.telephone);
+             console.log(data.customer.logo);
+             console.log(data.order.order_no);
+             console.log(data.order.payment_due);
+             console.log(data.order.account);
+             console.log(data.product.no);
+             console.log(data.product.product);
+             console.log(data.product.start_date);
+             console.log(data.product.end_date);
+             console.log(data.product.sum_price);
+             console.log(data.sub_total);
+             console.log(data.vat);
+             console.log(data.discount);
+             console.log(data.total);
+
           }).catch((error) => {
               console.error('Error:', error)
-          })
-
-
-
+          }) 
             stepper.next()
         }
       //   const template= $('select[custom-templates="template"]')

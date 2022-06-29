@@ -6,6 +6,8 @@ import (
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
+const Price float64 = 49
+
 type Env struct {
 	Owner       string `env-default:"piennews"`
 	Environment string `env:"ENVIRONMENT" env-default:"http://piennews001.thddns.net:3030"`
