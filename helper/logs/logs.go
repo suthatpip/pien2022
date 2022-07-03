@@ -73,7 +73,7 @@ func (app *LogParams) Write() {
 		"bres":        util.TruncateText(util.ToString(app.Response)),
 		"err":         util.SigleLine(app.Error),
 		"elapsedtime": time.Since(app.Begin).String(),
-	}).Info(config.Get().Owner)
+	}).Info(config.GetENV().Owner)
 }
 
 func (s *logFormatter) Format(entry *log.Entry) ([]byte, error) {

@@ -5,8 +5,10 @@ go 1.18
 require (
 	github.com/aquilax/truncate v1.0.0
 	github.com/bojanz/currency v1.0.3
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/sessions v1.2.1
 	github.com/ilyakaznacheev/cleanenv v1.3.0
 	github.com/jwangsadinata/go-multimap v0.0.0-20190620162914-c29f3d7f33b6

@@ -11,9 +11,9 @@ type templateCode struct {
 	Code string `uri:"code" binding:"required"`
 }
 
-func Template(tmpl *gin.RouterGroup) {
+func Template(rg *gin.RouterGroup) {
 
-	tmpl.POST("/:code", func(c *gin.Context) {
+	rg.POST("/:code", func(c *gin.Context) {
 		var t templateCode
 		if err := c.ShouldBindUri(&t); err != nil {
 			c.HTML(http.StatusBadRequest, "error.html", gin.H{
@@ -25,14 +25,23 @@ func Template(tmpl *gin.RouterGroup) {
 		}
 		controller.NewController().GetTemplate(c, t.Code)
 	})
-	tmpl.GET("/a", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "document_A.html", nil)
+	rg.GET("/a", func(c *gin.Context) {
+
+		c.HTML(http.StatusOK, "document.html", gin.H{
+			"template": "A",
+		})
 	})
-	tmpl.GET("/b", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "document_B.html", nil)
+	rg.GET("/b", func(c *gin.Context) {
+
+		c.HTML(http.StatusOK, "document.html", gin.H{
+			"template": "B",
+		})
 	})
-	tmpl.GET("/c", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "document_C.html", nil)
+	rg.GET("/c", func(c *gin.Context) {
+
+		c.HTML(http.StatusOK, "document.html", gin.H{
+			"template": "C",
+		})
 	})
 
 	// tmpl.Use(middleware.AuthorizeJWT())

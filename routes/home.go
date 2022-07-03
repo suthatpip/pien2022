@@ -13,7 +13,7 @@ import (
 	"github.com/markbates/goth/providers/line"
 )
 
-func Home(home *gin.RouterGroup) {
+func Home(rg *gin.RouterGroup) {
 	// //message := rg.Group("/message")
 	key := "pien"        // Replace with your SESSION_SECRET or similar
 	maxAge := 86400 * 30 // 30 days
@@ -27,7 +27,7 @@ func Home(home *gin.RouterGroup) {
 
 	gothic.Store = store
 
-	url := config.Get().Environment
+	url := config.GetENV().Environment
 
 	goth.UseProviders(
 		// google.New("48856069706-ujhkqk66uge342bbiqrhcok3akg47chp.apps.googleusercontent.com", "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", url+"/auth/google/callback", "email", "profile"),
@@ -36,7 +36,7 @@ func Home(home *gin.RouterGroup) {
 		line.New("1656602577", "86d81b7bc1d7529a239f494c72e9f480", url+"/auth/line/callback", "profile", "openid", "email"),
 	)
 
-	home.GET("/", func(c *gin.Context) {
+	rg.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
 			"title": "support",
 		})
@@ -122,7 +122,7 @@ func Home(home *gin.RouterGroup) {
 		// }
 	})
 
-	home.GET("/support", func(c *gin.Context) {
+	rg.GET("/support", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "support.html", gin.H{
 			"title": "support",
 		})

@@ -5,10 +5,9 @@ import (
 	"net/http"
 	"piennews/helper/config"
 	"piennews/helper/logs"
+	"piennews/services"
 	"reflect"
 	"time"
-
-	service "piennews/services/template"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,13 +24,13 @@ func (ct *controller) GetTemplate(c *gin.Context, code string) {
 			Request:     req,
 			Response:    res,
 			Status:      statusCode,
-			Source:      config.Get().Owner,
+			Source:      config.GetENV().Owner,
 			Destination: "db",
 			Error:       message,
 		}).Write()
 	}(time.Now())
 
-	template, found := service.NewService().GetTemplate(code)
+	template, found := services.NewService().GetTemplate(code)
 	if !found {
 		c.JSON(http.StatusOK, gin.H{
 			"title":    "",
