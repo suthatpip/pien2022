@@ -30,6 +30,47 @@
     clickable: ".fileinput-button"
   })
 
+  document.querySelector(".start").onclick = function () {
+    if (companyValidate()) {
+      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+  }
+  
+  document.querySelector(".cancel").onclick = function () {
+    myDropzone.removeAllFiles(true)
+  }
+  
+  myDropzone.on("success", function (file, response) {
+    companySave();
+  })
+  
+  // this.prototype.events = ["drop", "dragstart", "dragend", "dragenter", "dragover", 
+  // "dragleave", "addedfile", "addedfiles", "removedfile", 
+  // "thumbnail", "error", "errormultiple", "processing", 
+  // "processingmultiple", "uploadprogress", "totaluploadprogress", 
+  // "sending", "sendingmultiple", "success", "successmultiple", 
+  // "canceled", "canceledmultiple", "complete", "completemultiple", 
+  // "reset", "maxfilesexceeded", "maxfilesreached", "queuecomplete"];
+    
+  myDropzone.on("maxfilesexceeded", file => { 
+    myDropzone.removeAllFiles(true)
+    myDropzone.addFile(file);
+    $('#companySave').prop( "disabled", false );
+  });  
+  
+  myDropzone.on("maxfilesreached", file => { 
+    $('#companySave').prop( "disabled", false );
+  }); 
+  
+  myDropzone.on("error", file => {  
+    myDropzone.removeAllFiles(true);
+    $('#companySave').prop( "disabled", true );
+  }); 
+  
+
+
+
+
   companyList();
  
 
@@ -127,42 +168,6 @@ DecoupledDocumentEditor
   })
   .catch(error => {});
   
-document.querySelector(".start").onclick = function () {
-  if (companyValidate()) {
-    myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-  }
-}
-
-document.querySelector(".cancel").onclick = function () {
-  myDropzone.removeAllFiles(true)
-}
-
-myDropzone.on("success", function (file, response) {
-  companySave();
-})
-
-// this.prototype.events = ["drop", "dragstart", "dragend", "dragenter", "dragover", 
-// "dragleave", "addedfile", "addedfiles", "removedfile", 
-// "thumbnail", "error", "errormultiple", "processing", 
-// "processingmultiple", "uploadprogress", "totaluploadprogress", 
-// "sending", "sendingmultiple", "success", "successmultiple", 
-// "canceled", "canceledmultiple", "complete", "completemultiple", 
-// "reset", "maxfilesexceeded", "maxfilesreached", "queuecomplete"];
-  
-myDropzone.on("maxfilesexceeded", file => { 
-  myDropzone.removeAllFiles(true)
-  myDropzone.addFile(file);
-  $('#companySave').prop( "disabled", false );
-});  
-
-myDropzone.on("maxfilesreached", file => { 
-  $('#companySave').prop( "disabled", false );
-}); 
-
-myDropzone.on("error", file => {  
-  myDropzone.removeAllFiles(true);
-  $('#companySave').prop( "disabled", true );
-}); 
 
 function isEmpty(str) {
   return (!str || str.length === 0);
@@ -359,9 +364,7 @@ function processingError() {
 
 function getmenu(){
   var pathname = window.location.pathname;
-  console.log(pathname);
-  pathname=pathname.replaceAll ("/","-","/g").substring(1);
-  console.log(pathname);
+  pathname=pathname.replaceAll ("/","-","/g").substring(1); 
     $('#' + pathname).addClass("active");
 }
  

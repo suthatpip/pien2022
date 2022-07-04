@@ -15,13 +15,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="assets/plugins/fontawesome-free-6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="/assets/plugins/fontawesome-free-6.1.1/css/all.min.css">
 
    <!-- Custom style -->
-   <link rel="stylesheet" href="assets/css/custom.css">
+   <link rel="stylesheet" href="/assets/css/custom.css">
 
   <!-- Theme style -->
-  <link rel="stylesheet" href="assets/css/adminlte.min.css">
+  <link rel="stylesheet" href="/assets/css/adminlte.min.css">
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -30,7 +30,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="control-sidebar-slide-open layout-fixed layout-navbar-fixed">
   <div class="wrapper">
 
-    <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -75,345 +74,109 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
       </ul>
     </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
-
-        <img src="assets/img/logo.png" alt="pien" class="brand-image " style="opacity: .8">
+        <img src="/assets/img/logo.png" alt="pien" class="brand-image " style="opacity: .8">
         <span class="brand-text font-weight-light">Admin Pien</span>
       </a>
-
-      <!-- Sidebar -->
       <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="assets/img/user-default.jpg" class=" img-circle elevation-1">
+            <img src="/assets/img/user-default.jpg" class=" img-circle elevation-1">
           </div>
           <div class="info">
             <a href="#" class="d-block">Alexander</a>
           </div>
         </div>
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu"
-              data-accordion="false">
-              <li class="nav-item  menu-open"> 
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="dashboard.html" class="nav-link active ">
-                            <i class="nav-icon fas fa-solid fa-gauge-high"></i>
-                            <p>อัพโหลดไฟล์
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-              </li>
- 
-              <div >
-                  <hr class="hr-sidebar">
-              </div>
-              <li class="nav-header text-white-50">ข้อมูลส่วนตัว
-              </li>
-              
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-circle-user"></i>
-                      <p>
-                          จัดการข้อมูลส่วนตัว
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="account.html" class="nav-link  ">
-                              <i class="nav-icon far fa-circle text-info"></i>
-                              <p>บัญชีของฉัน
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-              <div >
-                  <hr class="hr-sidebar">
-              </div>
-              <li class="nav-header text-white-50">จัดการประกาศผ่าน การอัพโหลด
-              </li>
-              
-              <li class="nav-item ">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-circle-arrow-up"></i>
-                      <p>การอัพโหลด
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="account.html" class="nav-link   ">
-                              <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                              <p>อัพโหลดไฟล์
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-              <div >
-                  <hr class="hr-sidebar">
-              </div>
-              
-              <li class="nav-header text-white-50">จัดการประกาศผ่าน เทมเพลต
-              </li>
-              <li class="nav-header nav-link disabled">บริษัทสามัญ</li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          หนังสือเชิญประชุมสามัญประจำปี
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="document.html" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>
-                                  หนังสือเชิญประชุมสามัญประจำปี (ปิดงบประจำปี)
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
+            data-accordion="false">
+            <li class="nav-item">
+              <a href="/dashboard" class="nav-link  active">
+                <i class="nav-icon fas fa-solid fa-gauge-high"></i>
+                <p>แดชบอร์ด
+                </p>
+              </a>
+            </li>
+            <div>
+              <hr class="hr-sidebar">
+            </div>
+            <li class="nav-header text-white-50">ข้อมูลส่วนตัว
+            </li>
 
-              <li class="nav-header nav-link disabled">บริษัทวิสามัญ</li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ประกาศ เพิ่ม/ลด ทุน
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
+            <li class="nav-item ">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-solid fa-circle-user"></i>
+                <p>
+                  จัดการข้อมูลส่วนตัว
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/account" class="nav-link  ">
+                    <i class="nav-icon far fa-circle text-info"></i>
+                    <p>บัญชีของฉัน
+                    </p>
                   </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศ อนุมัติเพิ่มทุน
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศ อนุมัติลดทุน
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศ ลดทุน
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ประกาศเลิกบริษัทจำกัด
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
+                </li>
+              </ul>
+            </li>
+            <div>
+              <hr class="hr-sidebar">
+            </div>
+            <li class="nav-header text-white-50">จัดการประกาศ
+            </li>
+
+            <li class="nav-item ">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle-arrow-up"></i>
+                <p>การอัพโหลด
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/upload" class="nav-link  ">
+                    <i class="nav-icon fas fa-solid fa-file-lines"></i>
+                    <p>อัพโหลดไฟล์
+                    </p>
                   </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>เชิญประชุมเลิกบริษัท
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศแจ้งเจ้าหนี้-ลูกหนี้
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>อนุมัติงบ ณ วันเลิก
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>เสร็จชำระบัญชี
-                              </p>
-                          </a>
-                      </li>
-
-                  </ul>
-              </li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ประกาศ อิ่นๆ
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle-arrow-up"></i>
+                <p>จัดการเอกสาร
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/template/a" id="template-a"  class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-file-lines"></i>
+                    <p>บริษัทสามัญ</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>กรรมการเข้า-ออก อำนาจกรรมการ
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>แก้ไขข้อบังคับบริษัทจำกัด
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>แก้ไขวัตถุประสงค์
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>เปลี่ยนชื่อบริษัท
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>เปลี่ยนตราประทับ
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ย้ายสำนักงานใหญ่
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
+                </li>
+                <li class="nav-item">
+                  <a href="/template/b" id="template-b"  class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-file-lines"></i>
+                    <p>บริษัทวิสามัญ</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>จังหวัดเดียวกัน
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ข้ามจังหวัด
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ควบบริษัท
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
+                </li>
+                <li class="nav-item">
+                  <a href="/template/c" id="template-c"  class="nav-link">
+                    <i class="nav-icon fas fa-solid fa-file-lines"></i>
+                    <p>ห้างหุ้นส่วนจำกัด</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประชุมควบบริษัท
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศควบบริษัท
-                              </p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประชุมผู้ถือหุ้นของบริษัทที่จะควบเข้ากัน
-                              </p>
-                          </a>
-                      </li>
-
-
-
-                  </ul>
-              </li>
-              <li class="nav-header nav-link disabled ">ห้างหุ้นส่วนจำกัด</li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ประกาศแปรสภาพ
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>แปรสภาพห้างหุ้นส่วนเป็นบริษัทจำกัด
-                              </p>
-                          </a>
-                      </li>
-
-                  </ul>
-
-              </li>
-              <li class="nav-item">
-                  <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-solid fa-file-lines"></i>
-                      <p>
-                          ประกาศเลิก
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-
-                      <li class="nav-item">
-                          <a href="#" class="nav-link">
-                              <i class="nav-icon far fa-circle text-danger"></i>
-                              <p>ประกาศเลิกห้างหุ้นส่วน
-                              </p>
-                          </a>
-                      </li>
-                  </ul>
-
-              </li>
+                </li>
+              </ul>
+            </li>
           </ul>
-      </nav>
-        <!-- /.sidebar-menu -->
+        </nav>
       </div>
-      <!-- /.sidebar -->
     </aside>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -593,7 +356,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.item -->
                     <li class="item">
                       <div class="product-img">
-                        <img src="assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        <img src="/assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
                       </div>
                       <div class="product-info">
                         <a href="javascript:void(0)" class="product-title">Bicycle
@@ -612,7 +375,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.item -->
                     <li class="item">
                       <div class="product-img">
-                        <img src="assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        <img src="/assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
                       </div>
                       <div class="product-info">
                         <a href="javascript:void(0)" class="product-title">
@@ -633,7 +396,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.item -->
                     <li class="item">
                       <div class="product-img">
-                        <img src="assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                        <img src="/assets/img/default-150x150.png" alt="Product Image" class="img-size-50">
                       </div>
                       <div class="product-info">
                         <a href="javascript:void(0)" class="product-title">PlayStation 4
@@ -670,10 +433,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </footer>
   </div>
 
-  <script src="assets/plugins/jquery/jquery.min.js"></script>
-  <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/plugins/chart.js/Chart.min.js"></script>
-  <script src="assets/js/adminlte.min.js"></script>
+  <script src="/assets/plugins/jquery/jquery.min.js"></script>
+  <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/plugins/chart.js/Chart.min.js"></script>
+  <script src="/assets/js/adminlte.min.js"></script>
   <script>
     $(function () {
 

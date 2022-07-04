@@ -15,6 +15,9 @@ func Gateway(router *gin.Engine) {
 		Template(router.Group("/template"))
 		Payment(router.Group("/payment"))
 		Company(router.Group("/company"))
+		Upload(router.Group("/upload"))
+		Dashboard(router.Group("/dashboard"))
+		Account(router.Group("/account"))
 	}
 
 	// m := router.Group("/inbox")
