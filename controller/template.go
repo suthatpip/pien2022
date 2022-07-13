@@ -3,7 +3,6 @@ package controller
 import (
 	"fmt"
 	"net/http"
-	"piennews/helper/config"
 	"piennews/helper/logs"
 	"piennews/services"
 	"reflect"
@@ -13,30 +12,21 @@ import (
 )
 
 func (ct *controller) GetTemplate(c *gin.Context, code string) {
-	req := ""
-	res := ""
-	message := ""
-	statusCode := http.StatusOK
+	logbody := ""
+	logerror := ""
+
 	defer func(begin time.Time) {
 		logs.NewLogs(&logs.LogParams{
-			Begin:       begin,
-			Context:     c,
-			Request:     req,
-			Response:    res,
-			Status:      statusCode,
-			Source:      config.GetENV().Owner,
-			Destination: "db",
-			Error:       message,
+			Begin:   begin,
+			Context: c,
+			Body:    logbody,
+			Error:   logerror,
 		}).Write()
 	}(time.Now())
 
 	template, found := services.NewService().GetTemplate(code)
 	if !found {
-		c.JSON(http.StatusOK, gin.H{
-			"title":    "",
-			"subtitle": "",
-			"detail":   "",
-		})
+		c.Status(http.StatusNotFound)
 		return
 	} else {
 		s := reflect.ValueOf(template)

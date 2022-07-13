@@ -7,10 +7,17 @@ type serviceInterface interface {
 	GetCompanyList(uuid string) ([]models.CompanyModel, error)
 	GetCustomer(uuid string) models.CustomerModel
 	AddPayment(payment *models.AddPaymentModel) error
-	GetPayment(payment_code string) (*models.SummaryPaymentModel, error)
+	GetPaymentDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
+	DeletePayment(p *models.DeleteInitPayment, uuid string) error
+	DeleteProductAndPayment(p *models.DeleteInitPayment, uuid string) error
 	GetTemplate(code string) ([]interface{}, bool)
 	SaveCompany(com *models.CompanyModel) bool
 	SaveCompanyLogo(com *models.CompanyModel) bool
+	NewProduct(f *models.ProductModel, uuid string) error
+	GetProduct(uuid string) ([]models.ProductModel, error)
+	SubmitProduct(f []models.InitProductModel, uuid string) error
+	DelProduct(p *models.ProductModel, uuid string) error
+	NewInitPaysolution(payment_code string) (int64, error)
 }
 
 type service struct {

@@ -20,7 +20,7 @@ func Connect() MySQLService {
 		Password: "#XRvxRXT2v9aTg7LC7yZ",
 		Host:     "127.0.0.1",
 		Port:     "3306",
-		DB:       "piendb",
+		DB:       "pien2022db",
 	}
 
 }

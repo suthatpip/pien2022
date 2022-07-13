@@ -1,14 +1,20 @@
 package models
 
 type InitPaymentModel struct {
-	Start_Date   string `json:"start_date"`
-	End_Date     string `json:"end_date"`
-	Product_Name string `json:"product_name"`
-	Company_Code string `json:"company_code"`
+	Start_Date   string              `json:"start_date"`
+	End_Date     string              `json:"end_date"`
+	Product_Name string              `json:"product_name"`
+	Company_Code string              `json:"company_code"`
+	UUID         string              `json:"uuid"`
+	Products     *[]InitProductModel `json:"products"`
+}
+
+type InitProductModel struct {
+	Code string `json:"code"`
+	Data string `json:"data"`
 }
 
 type AddPaymentModel struct {
-	Product          string
 	Start_Date       string
 	End_Date         string
 	Days             string
@@ -24,13 +30,15 @@ type AddPaymentModel struct {
 }
 
 type SummaryPaymentModel struct {
-	Customer_Name   string               `json:"customer_name"`
-	Company_Detail  *SummaryCompanyModel `json:"company"`
-	Order_Detail    *SummaryOrderModel   `json:"order"`
-	Products_Detail *SummaryProductModel `json:"product"`
-	Sub_Total       string               `json:"sub_total"`
-	VAT             string               `json:"vat"`
-	Total           string               `json:"total"`
+	Customer_Name      string                 `json:"customer_name"`
+	Publish_Start_Date string                 `json:"publish_start_date"`
+	Publish_End_Date   string                 `json:"publish_end_date"`
+	Company_Detail     *SummaryCompanyModel   `json:"company"`
+	Order_Detail       *SummaryOrderModel     `json:"order"`
+	Products_Detail    *[]SummaryProductModel `json:"product"`
+	Sub_Total          string                 `json:"sub_total"`
+	VAT                string                 `json:"vat"`
+	Total              string                 `json:"total"`
 }
 
 type SummaryCompanyModel struct {
@@ -55,4 +63,12 @@ type SummaryProductModel struct {
 	End_Date     string `json:"end_date"`
 	Days         string `json:"days"`
 	Product_Baht string `json:"product_baht"`
+}
+
+type DeleteInitPayment struct {
+	Payment_code string `json:"payment_code"`
+}
+
+type SubmitPayment struct {
+	Payment_code string `uri:"code" binding:"required"`
 }

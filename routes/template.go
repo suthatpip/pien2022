@@ -3,6 +3,8 @@ package routers
 import (
 	"net/http"
 	"piennews/controller"
+	"piennews/helper/util"
+	"piennews/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,22 +27,36 @@ func Template(rg *gin.RouterGroup) {
 		}
 		controller.NewController().GetTemplate(c, t.Code)
 	})
+
+	rg.POST("/new", func(c *gin.Context) {
+		fmodel := models.ProductModel{}
+		if err := c.ShouldBindJSON(&fmodel); err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+		controller.NewController().CustomeFile(c, &fmodel)
+	})
+
 	rg.GET("/a", func(c *gin.Context) {
 
-		c.HTML(http.StatusOK, "document.html", gin.H{
-			"template": "A",
+		c.HTML(http.StatusOK, "template.html", gin.H{
+			"template":    "A",
+			"document_no": util.GetUUID(),
 		})
+
 	})
 	rg.GET("/b", func(c *gin.Context) {
 
-		c.HTML(http.StatusOK, "document.html", gin.H{
-			"template": "B",
+		c.HTML(http.StatusOK, "template.html", gin.H{
+			"template":    "B",
+			"document_no": util.GetUUID(),
 		})
 	})
 	rg.GET("/c", func(c *gin.Context) {
 
-		c.HTML(http.StatusOK, "document.html", gin.H{
-			"template": "C",
+		c.HTML(http.StatusOK, "template.html", gin.H{
+			"template":    "C",
+			"document_no": util.GetUUID(),
 		})
 	})
 

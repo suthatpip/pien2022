@@ -12,16 +12,13 @@ import (
 func (s *service) AddPayment(payment *models.AddPaymentModel) error {
 
 	db, err := sql.Open("mysql", database.Connect().ConnectionString())
-
 	if err != nil {
 		return err
 	}
-
 	defer db.Close()
-
-	statement, err := db.Prepare(`INSERT INTO payment
-	(payment_code, company_code, customer_uuid, order_no, payment_due_date, tax_invoice_no, file_name, start_date, end_date, days, sub_total_baht, vat, total_baht)
-	VALUES(?, ?, ?, ?, ?  , ?, ?, ?, ?, ?, ?, ?, ?);`)
+	statement, err := db.Prepare(`INSERT INTO orders 
+	(payment_code, company_code, customer_uuid, order_no, payment_due_date, tax_invoice_no, start_date, end_date, days, sub_total_baht, vat, total_baht)
+	VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`)
 
 	if err != nil {
 		return err
@@ -33,7 +30,6 @@ func (s *service) AddPayment(payment *models.AddPaymentModel) error {
 		payment.Order_No,
 		payment.Payment_Due_Date,
 		payment.Tax_Invoice_No,
-		payment.Product,
 		payment.Start_Date,
 		payment.End_Date,
 		payment.Days,
@@ -48,7 +44,7 @@ func (s *service) AddPayment(payment *models.AddPaymentModel) error {
 	return nil
 }
 
-func (s *service) GetPayment(payment_code string) (*models.SummaryPaymentModel, error) {
+func (s *service) GetPaymentDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error) {
 	db, err := sql.Open("mysql", database.Connect().ConnectionString())
 
 	if err != nil {
@@ -57,73 +53,156 @@ func (s *service) GetPayment(payment_code string) (*models.SummaryPaymentModel, 
 	defer db.Close()
 
 	sql := `SELECT  
+	p.product_name, 
 	CONCAT(cus.first_name, ' ', cus.last_name) as name, 
 	com.name as company, 
 	com.code, 
 	com.address, 
 	com.telephone, 
 	IFNULL(com.logo,''), 
-	pay.payment_code, 
-	pay.order_no, 
-	DATE_FORMAT(pay.payment_due_date,'%d/%m/%Y'), 
-	pay.tax_invoice_no, 
-	pay.file_name,  
-	DATE_FORMAT(pay.start_date,'%d/%m/%Y'), 
-	DATE_FORMAT(pay.end_date,'%d/%m/%Y'), 	 
-	pay.days, 
-	pay.sub_total_baht, 
-	pay.vat, 
-	pay.total_baht 
-	FROM payment pay inner join company com on pay.company_code = com.code inner join customer cus on com.customer_uuid =cus.uuid 
-	where payment_code = ? `
+	o.payment_code, 
+	o.order_no, 
+	DATE_FORMAT(o.payment_due_date,'%d/%m/%Y'), 
+	o.tax_invoice_no, 
+	DATE_FORMAT(o.start_date,'%d/%m/%Y'), 
+	DATE_FORMAT(o.end_date,'%d/%m/%Y'), 	 
+	o.days, 
+	o.sub_total_baht, 
+	o.vat, 
+	o.total_baht 
+	FROM orders o 
+	inner join company com on o.company_code = com.code 
+	inner join customer cus on com.customer_uuid =cus.uuid 
+	inner join order_product pp on pp.payment_code= o.payment_code 
+	inner join product p on p.product_code =pp.product_code 
+	where o.payment_code = ? AND o.customer_uuid=?;`
 
-	list, err := db.Query(sql, payment_code)
+	list, err := db.Query(sql, pay_code, uuid)
 	if err != nil {
 		return nil, err
 	}
-	payment := models.SummaryPaymentModel{}
-	company := models.SummaryCompanyModel{}
-	order := models.SummaryOrderModel{}
-	product := models.SummaryProductModel{
-		No: 1,
-	}
+	products := []models.SummaryProductModel{}
 
+	var product_name, customer_name, name, code, address, telephone, logo, payment_code, order_no, payment_due, tax_invoice_no, start_date, end_date, days, sub_total, vat, total string
+	no := 0
 	for list.Next() {
 		err := list.Scan(
-			&payment.Customer_Name,
-			&company.Name,
-			&company.Code,
-			&company.Address,
-			&company.Telephone,
-			&company.Logo,
-
-			&order.Payment_code,
-			&order.Order_No,
-			&order.Payment_Due,
-			&order.Tax_invoice_No,
-
-			&product.Product,
-			&product.Start_Date,
-			&product.End_Date,
-			&product.Days,
-
-			&payment.Sub_Total,
-			&payment.VAT,
-			&payment.Total,
+			&product_name,
+			&customer_name,
+			&name,
+			&code,
+			&address,
+			&telephone,
+			&logo,
+			&payment_code,
+			&order_no,
+			&payment_due,
+			&tax_invoice_no,
+			&start_date,
+			&end_date,
+			&days,
+			&sub_total,
+			&vat,
+			&total,
 		)
+		no++
+		product := models.SummaryProductModel{
+			No:           no,
+			Product:      product_name,
+			Start_Date:   util.DateTH(start_date),
+			End_Date:     util.DateTH(end_date),
+			Days:         days,
+			Product_Baht: "49 บาท",
+		}
+		products = append(products, product)
 		if err != nil {
 			panic(err.Error())
 		}
-		product.Product_Baht = payment.Sub_Total
-		payment.Company_Detail = &company
+	}
 
-		order.Payment_Due = util.DateTH(order.Payment_Due)
-		payment.Order_Detail = &order
-
-		product.Start_Date = util.DateTH(product.Start_Date)
-		product.End_Date = util.DateTH(product.End_Date)
-		payment.Products_Detail = &product
+	payment := models.SummaryPaymentModel{
+		Customer_Name:      customer_name,
+		Publish_Start_Date: start_date,
+		Publish_End_Date:   end_date,
+		Company_Detail: &models.SummaryCompanyModel{
+			Name:      name,
+			Address:   address,
+			Telephone: telephone,
+			Logo:      logo,
+			Code:      code,
+		},
+		Order_Detail: &models.SummaryOrderModel{
+			Order_No:       order_no,
+			Payment_Due:    payment_due,
+			Tax_invoice_No: tax_invoice_no,
+			Payment_code:   payment_code,
+		},
+		Products_Detail: &products,
+		Sub_Total:       sub_total,
+		VAT:             vat,
+		Total:           total,
 	}
 
 	return &payment, nil
+}
+
+func (s *service) DeletePayment(p *models.DeleteInitPayment, uuid string) error {
+
+	db, err := sql.Open("mysql", database.Connect().ConnectionString())
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	statement, err := db.Prepare(`DELETE FROM orders 
+	WHERE payment_code =? and customer_uuid=? and status=0;`)
+
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(p.Payment_code, uuid)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *service) DeleteProductAndPayment(p *models.DeleteInitPayment, uuid string) error {
+	db, err := sql.Open("mysql", database.Connect().ConnectionString())
+
+	if err != nil {
+		return err
+	}
+
+	defer db.Close()
+
+	tx, err := db.Begin()
+
+	sql := `DELETE FROM product 
+	WHERE product_code IN ( 
+		SELECT pp.product_code  
+		FROM orders o INNER JOIN order_product pp ON o.payment_code = pp.payment_code 
+		WHERE o.payment_code =? AND o.customer_uuid =? AND o.status =0 
+	) AND product_type ='template';`
+
+	_, err = tx.Exec(sql, p.Payment_code, uuid)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	sql = `DELETE FROM orders WHERE payment_code =? and customer_uuid=? and status=0;`
+
+	_, err = tx.Exec(sql, p.Payment_code, uuid)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	err = tx.Commit()
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -1,0 +1,156 @@
+.rounded {
+    border-radius: 0.65rem!important;
+}
+
+.p-10 {
+    padding: 2.5rem!important;
+}
+.border {
+    border: 1px solid #f5eff3!important;
+}
+
+.dropzone{
+    min-height:auto;
+    padding:1.5rem 1.75rem;
+    text-align:center;
+    cursor:pointer;
+    border:1px dashed #20d489;
+    background-color:#e4fff4;
+    border-radius:.65rem!important
+}
+.dropzone .dz-message{
+    margin:0;
+    display:flex;
+    text-align:left
+}
+.dropzone .dz-preview{
+    border-radius:.65rem!important;
+    margin:.75rem
+}
+.dropzone .dz-preview .dz-image{
+    border-radius:.65rem!important;
+    z-index:1
+}
+.dropzone .dz-preview.dz-file-preview .dz-image{
+    background:#eff2f5
+}
+.dropzone .dz-error-mark,.dropzone .dz-success-mark{
+    margin-left:-20px!important;
+    margin-top:-20px!important
+}
+.dropzone .dz-error-mark svg,.dropzone .dz-success-mark svg{
+    height:40px!important;
+    width:40px!important
+}
+.dropzone .dz-remove{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:1.65rem;
+    width:1.65rem;
+    font-size:1rem;
+    text-indent:-9999px;
+    white-space:nowrap;
+    position:absolute;
+    z-index:2;
+    background-size:40%;
+    background-color:#fff!important;
+    box-shadow:0 .1rem 1rem .25rem rgba(0,0,0,.05);
+    border-radius:100%;
+    top:-.825rem;
+    right:-.825rem;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-color:transparent;
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23A1A5B7'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e")
+}
+.dropzone .dz-remove:hover{
+    background-repeat:no-repeat;
+    background-position:center;
+    background-color:transparent;
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2320D489'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e")
+}
+.dropzone .dz-error-message{
+    color:#fff;
+    background:#f1416c
+}
+.dropzone.dropzone-queue{
+    border:0;
+    padding:0;
+    background-color:transparent;
+    text-align:left
+}
+.dropzone.dropzone-queue .dz-message{
+    display:none
+}
+.dropzone.dropzone-queue .dropzone-panel .dropzone-remove-all,.dropzone.dropzone-queue .dropzone-panel .dropzone-upload{
+    display:none
+}
+.dropzone.dropzone-queue .dropzone-item{
+    display:flex;
+    align-items:center;
+    margin-top:.75rem;
+    border-radius:.65rem;
+    padding:.5rem 1rem;
+    background-color:#f5f8fa
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-file{
+    flex-grow:1
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-file .dropzone-filename{
+    font-size:.9rem;
+    font-weight:500;
+    color:#7e8299;
+    text-overflow:ellipsis;
+    margin-right:.5rem;
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-file .dropzone-filename:hover{
+    color:#20d489
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-file .dropzone-error{
+    margin-top:.25rem;
+    font-size:.9rem;
+    font-weight:400;
+    color:#f1416c;
+    text-overflow:ellipsis
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-progress{
+    width:15%
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-progress .progress{
+    height:5px;
+    transition:all .2s ease
+}
+@media (prefers-reduced-motion:reduce){
+    .dropzone.dropzone-queue .dropzone-item .dropzone-progress .progress{
+        transition:none
+    }
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar{
+    margin-left:1rem;
+    display:flex;
+    flex-wrap:nowrap
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-cancel,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-delete,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-start{
+    height:25px;
+    width:25px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:color .2s ease,background-color .2s ease
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-cancel i,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-delete i,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-start i{
+    transition:color .2s ease,background-color .2s ease;
+    font-size:.8rem;
+    color:#7e8299
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-cancel:hover,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-delete:hover,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-start:hover{
+    transition:color .2s ease,background-color .2s ease
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-cancel:hover i,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-delete:hover i,.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-start:hover i{
+    color:#20d489
+}
+.dropzone.dropzone-queue .dropzone-item .dropzone-toolbar .dropzone-start{
+    transition:color .2s ease,background-color .2s ease
+}

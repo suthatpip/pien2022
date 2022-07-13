@@ -1,0 +1,24 @@
+<html> 
+<head>
+    <title>
+        Paysolution
+    </title>
+</head> 
+<body> 
+    <form method="post" action="{{.paysolution_url}}">
+        <input type="hidden" name="refno" value="{{.paysolution_refno}}">
+        <input type="hidden" name="merchantid" value="{{.paysolution_merchantid}}">
+        <input type="hidden" name="customeremail" value="{{.paysolution_customeremail}}">
+        <input type="hidden" name="cc" value="{{.paysolution_cc}}">
+        <input type="hidden" name="productdetail" value="{{.paysolution_productdetail}}">
+        <input type="hidden" name="total" value="{{.paysolution_total}}">
+        <br>
+        <input id="gotopay" type="submit" name="Submit" value="">
+    </form>
+
+    <script>
+        document.getElementById("gotopay").click();
+    </script>
+</body>
+
+</html>

@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -20,14 +19,15 @@ func Company(rg *gin.RouterGroup) {
 	})
 
 	rg.POST("/init", func(c *gin.Context) {
-		code := util.RandSeq(5)
+		code := util.GetUUID()
 		c.JSON(http.StatusOK, gin.H{"code": code})
 	})
 
 	rg.POST("/new", func(c *gin.Context) {
-		fmt.Println("/new")
+
 		v := &models.CompanyModel{}
 		if err := c.ShouldBindJSON(&v); err != nil {
+			c.Status(http.StatusBadRequest)
 			return
 		}
 

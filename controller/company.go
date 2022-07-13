@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"piennews/helper/config"
 	"piennews/helper/jwt"
 	"piennews/helper/logs"
 	"piennews/models"
@@ -14,20 +13,15 @@ import (
 )
 
 func (ct *controller) CompanyList(c *gin.Context) {
-	req := ""
-	res := ""
-	message := ""
-	statusCode := http.StatusOK
+	logbody := ""
+	logerror := ""
+
 	defer func(begin time.Time) {
 		logs.NewLogs(&logs.LogParams{
-			Begin:       begin,
-			Context:     c,
-			Request:     req,
-			Response:    res,
-			Status:      statusCode,
-			Source:      config.GetENV().Owner,
-			Destination: "internal",
-			Error:       message,
+			Begin:   begin,
+			Context: c,
+			Body:    logbody,
+			Error:   logerror,
 		}).Write()
 	}(time.Now())
 
@@ -45,20 +39,15 @@ func (ct *controller) CompanyList(c *gin.Context) {
 }
 
 func (ct *controller) CompanyNew(c *gin.Context, com *models.CompanyModel) {
-	req := ""
-	res := ""
-	message := ""
-	statusCode := http.StatusOK
+	logbody := ""
+	logerror := ""
+
 	defer func(begin time.Time) {
 		logs.NewLogs(&logs.LogParams{
-			Begin:       begin,
-			Context:     c,
-			Request:     req,
-			Response:    res,
-			Status:      statusCode,
-			Source:      config.GetENV().Owner,
-			Destination: "internal",
-			Error:       message,
+			Begin:   begin,
+			Context: c,
+			Body:    logbody,
+			Error:   logerror,
 		}).Write()
 	}(time.Now())
 
@@ -77,20 +66,15 @@ func (ct *controller) CompanyNew(c *gin.Context, com *models.CompanyModel) {
 }
 
 func (ct *controller) CompanyNewLogo(c *gin.Context, com *models.CompanyModel) {
-	req := ""
-	res := ""
-	message := ""
-	statusCode := http.StatusOK
+	logbody := ""
+	logerror := ""
+
 	defer func(begin time.Time) {
 		logs.NewLogs(&logs.LogParams{
-			Begin:       begin,
-			Context:     c,
-			Request:     req,
-			Response:    res,
-			Status:      statusCode,
-			Source:      config.GetENV().Owner,
-			Destination: "internal",
-			Error:       message,
+			Begin:   begin,
+			Context: c,
+			Body:    logbody,
+			Error:   logerror,
 		}).Write()
 	}(time.Now())
 

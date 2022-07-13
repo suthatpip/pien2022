@@ -2,7 +2,6 @@ package services
 
 import (
 	"database/sql"
-	"fmt"
 	"piennews/helper/database"
 	"piennews/models"
 
@@ -48,7 +47,7 @@ func (sv *service) GetCompany(company_id string) models.CompanyModel {
 	db, err := sql.Open("mysql", database.Connect().ConnectionString())
 
 	if err != nil {
-		fmt.Printf("%v", err.Error())
+
 		return models.CompanyModel{}
 	}
 
