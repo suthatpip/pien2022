@@ -206,3 +206,22 @@ func (s *service) DeleteProductAndPayment(p *models.DeleteInitPayment, uuid stri
 
 	return nil
 }
+
+func (s *service) UpdateOrderStatus(pay_code string, uuid string, status string) error {
+	db, err := sql.Open("mysql", database.Connect().ConnectionString())
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	statement, err := db.Prepare(`UPDATE orders SET update_date=now(), status=? WHERE payment_code=? AND customer_uuid=?;`)
+
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(status, pay_code, uuid)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

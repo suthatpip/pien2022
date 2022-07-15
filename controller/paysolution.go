@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"piennews/helper/config"
 	"piennews/helper/jwt"
 	"piennews/helper/logs"
 	"piennews/models"
@@ -17,16 +18,18 @@ func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPaymen
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	user_id := jwt.ExtractClaims(h.Token, "uuid")
+
+	services.NewService().UpdateOrderStatus(submit.Payment_code, user_id, config.GetOrderStatus().APPROVED)
 
 	pay, err := services.NewService().GetPaymentDetail(submit.Payment_code, user_id)
 	if err != nil {
@@ -42,6 +45,8 @@ func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPaymen
 		return
 	}
 
+	services.NewService().UpdateOrderStatus(submit.Payment_code, user_id, config.GetOrderStatus().PENDING_PAYMENT)
+
 	c.HTML(http.StatusOK, "paysolution.html", gin.H{
 		"paysolution_url":           "https://www.thaiepay.com/epaylink/payment.aspx",
 		"paysolution_refno":         fmt.Sprintf("%v", ref_no),
@@ -51,5 +56,38 @@ func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPaymen
 		"paysolution_productdetail": fmt.Sprintf("ประกาศหนังสือพิมพ์ (%v-%v)", pay.Publish_Start_Date, pay.Publish_End_Date),
 		"paysolution_total":         pay.Total,
 	})
+
+}
+
+func PaysolutionInquiry(ref_no string) {
+	lg := &logs.LogExternalParams{}
+
+	defer func(begin time.Time) {
+		lg.Begin = begin
+		logs.ExternalLogs(lg).WriteExternalLogs()
+	}(time.Now())
+	lg.Request = ref_no
+	inquiry, err := services.NewService().InquiryPaysolution(ref_no)
+	if err != nil {
+		lg.Error = err.Error()
+		return
+	}
+
+	if inquiry.Status == "COMPLETE" {
+		v, err := services.NewService().GetOrderPrice("809418710155847")
+		if err != nil {
+			lg.Error = err.Error()
+			return
+		}
+		if v == inquiry.Total {
+			lg.Response = fmt.Sprintf("COMPLETE: %v == %v", inquiry.Total, v)
+			return
+		}
+
+		lg.Response = fmt.Sprintf("INCOMPLETE: %v != %v", inquiry.Total, v)
+
+	} else {
+		lg.Error = inquiry.Status
+	}
 
 }

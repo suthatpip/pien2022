@@ -27,7 +27,7 @@ func Home(rg *gin.RouterGroup) {
 
 	gothic.Store = store
 
-	url := config.GetENV().Environment
+	url := config.GetENV().ENVIRONMENT
 
 	goth.UseProviders(
 		// google.New("48856069706-ujhkqk66uge342bbiqrhcok3akg47chp.apps.googleusercontent.com", "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", url+"/auth/google/callback", "email", "profile"),

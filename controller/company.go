@@ -17,12 +17,12 @@ func (ct *controller) CompanyList(c *gin.Context) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
@@ -43,12 +43,12 @@ func (ct *controller) CompanyNew(c *gin.Context, com *models.CompanyModel) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
@@ -70,12 +70,12 @@ func (ct *controller) CompanyNewLogo(c *gin.Context, com *models.CompanyModel) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)

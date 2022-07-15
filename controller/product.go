@@ -21,12 +21,12 @@ func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) 
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
@@ -53,12 +53,12 @@ func (ct *controller) UploadFile(c *gin.Context) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	form, err := c.MultipartForm()
@@ -102,12 +102,12 @@ func (ct *controller) GetProduct(c *gin.Context) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
@@ -128,12 +128,12 @@ func (ct *controller) DeleteProduct(c *gin.Context, products *models.ProductsMod
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)

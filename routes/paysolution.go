@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"fmt"
 	"net/http"
 	"piennews/controller"
 	"piennews/models"
@@ -11,12 +12,14 @@ import (
 func Paysolution(rg *gin.RouterGroup) {
 
 	rg.POST("/callback", func(c *gin.Context) {
-		// var callback PaysolutionCallback
-		// if err := c.Bind(&callback); err != nil {
-		// 	fmt.Printf("%v\n", err.Error())
-		// 	c.String(http.StatusBadRequest, err.Error())
-		// 	return
-		// }
+		paysolution := models.PaysolutionCallback{}
+		if err := c.Bind(&paysolution); err != nil {
+			fmt.Printf("%v\n", err.Error())
+			c.String(http.StatusBadRequest, err.Error())
+			return
+		}
+
+		fmt.Printf("%+v\n", paysolution)
 
 		// paysolutionModel := &service.PaysolutionModel{}
 		// paysolutionModel.Ref_no = callback.Ref_no

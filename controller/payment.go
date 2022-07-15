@@ -23,12 +23,12 @@ func (ct *controller) InitPayment(c *gin.Context, v *models.InitPaymentModel) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	payment_code, err := setPayment(v)
@@ -54,12 +54,12 @@ func (ct *controller) DeleteInitPayment(c *gin.Context, del *models.DeleteInitPa
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
@@ -75,12 +75,12 @@ func (ct *controller) DeleteInitAllPayment(c *gin.Context, del *models.DeleteIni
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)

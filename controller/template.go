@@ -16,12 +16,12 @@ func (ct *controller) GetTemplate(c *gin.Context, code string) {
 	logerror := ""
 
 	defer func(begin time.Time) {
-		logs.NewLogs(&logs.LogParams{
+		logs.InternalLogs(&logs.LogInternalParams{
 			Begin:   begin,
 			Context: c,
 			Body:    logbody,
 			Error:   logerror,
-		}).Write()
+		}).WriteInternalLogs()
 	}(time.Now())
 
 	template, found := services.NewService().GetTemplate(code)

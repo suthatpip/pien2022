@@ -1,9 +1,12 @@
 package main
 
-import "piennews/cmd"
+import (
+	"piennews/controller"
+)
 
 func main() {
 
-	cmd.Run()
+	//cmd.Run()
+	controller.PaysolutionInquiry("809418710155847")
 
 }

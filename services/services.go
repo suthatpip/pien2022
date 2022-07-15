@@ -9,6 +9,8 @@ type serviceInterface interface {
 	AddPayment(payment *models.AddPaymentModel) error
 	GetPaymentDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
 	DeletePayment(p *models.DeleteInitPayment, uuid string) error
+	UpdateOrderStatus(pay_code string, uuid string, status string) error
+
 	DeleteProductAndPayment(p *models.DeleteInitPayment, uuid string) error
 	GetTemplate(code string) ([]interface{}, bool)
 	SaveCompany(com *models.CompanyModel) bool
@@ -18,6 +20,9 @@ type serviceInterface interface {
 	SubmitProduct(f []models.InitProductModel, uuid string) error
 	DelProduct(p *models.ProductModel, uuid string) error
 	NewInitPaysolution(payment_code string) (int64, error)
+	InquiryPaysolution(ref_no string) (*models.InquiryModel, error)
+
+	GetOrderPrice(refno string) (float64, error)
 }
 
 type service struct {

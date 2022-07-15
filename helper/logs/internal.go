@@ -14,30 +14,30 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type LogParams struct {
+var internalLog = log.New()
+
+type LogInternalParams struct {
 	Begin   time.Time
 	Context *gin.Context
 	Body    interface{}
 	Error   string
 }
 
-type AffLogs interface {
-	Write()
+type InternalLogs interface {
+	WriteInternalLogs()
 }
 
-type logFormatter struct{}
-
-var logger = log.New()
+type logInternalFormatter struct{}
 
 func init() {
 
-	logger.Level = log.DebugLevel
-	logger.SetOutput(os.Stdout)
-	logger.SetFormatter(new(logFormatter))
+	internalLog.Level = log.DebugLevel
+	internalLog.SetOutput(os.Stdout)
+	internalLog.SetFormatter(new(logInternalFormatter))
 }
 
-func NewLogs(params *LogParams) AffLogs {
-	return &LogParams{
+func NewInternalLogs(params *LogInternalParams) InternalLogs {
+	return &LogInternalParams{
 		Begin:   params.Begin,
 		Context: params.Context,
 		Body:    params.Body,
@@ -45,11 +45,11 @@ func NewLogs(params *LogParams) AffLogs {
 	}
 }
 
-func (app *LogParams) Write() {
+func (app *LogInternalParams) WriteInternalLogs() {
 
 	user_id := jwt.ExtractClaims(app.Context.MustGet("headers").(models.Header).Token, "uuid")
 
-	logger.WithFields(log.Fields{
+	internalLog.WithFields(log.Fields{
 		"time":        app.Begin.Format("2006-01-02 15:04:05.000"),
 		"uuid":        user_id,
 		"status":      app.Context.Writer.Status(),
@@ -59,10 +59,10 @@ func (app *LogParams) Write() {
 		"body":        app.Body,
 		"err":         util.SigleLine(app.Error),
 		"elapsedtime": time.Since(app.Begin).String(),
-	}).Info(config.GetENV().Owner)
+	}).Info(config.GetENV().OWNER)
 }
 
-func (s *logFormatter) Format(entry *log.Entry) ([]byte, error) {
+func (s *logInternalFormatter) Format(entry *log.Entry) ([]byte, error) {
 
 	msg := fmt.Sprintf(`%v %v %v uuid=%v path="%v" params="%v" body="%v" err="%+v" %v`+"\n",
 		entry.Data["time"],

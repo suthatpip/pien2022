@@ -23,7 +23,9 @@ func Gateway(router *gin.Engine) {
 	}
 
 	router.GET("/error", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "error.html", gin.H{})
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "sdfsdfsd",
+		})
 	})
 
 	// m := router.Group("/inbox")
