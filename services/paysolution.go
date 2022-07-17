@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"piennews/helper/config"
@@ -81,33 +82,12 @@ func (sv *service) InquiryPaysolution(ref_no string) (*models.InquiryModel, erro
 		return nil, err
 	}
 
-	return &models.InquiryModel{
-		ReferenceNo:        "",
-		OrderNo:            "",
-		MerchantID:         0,
-		ProductDetail:      "",
-		Total:              49.0,
-		CardType:           "",
-		CustomerEmail:      "",
-		CurrencyCode:       "",
-		Status:             "",
-		StatusName:         "",
-		PostBackUrl:        url,
-		PostBackParameters: "",
-		PostBackMethod:     "",
-		PostBackCompleted:  false,
-		OrderDateTime:      "",
-		Installment:        "",
-	}, nil
-
-	// if len(transactions) == 0 {
-
-	// 	lg.Error = "No Found"
-	// 	return nil, errors.New("No Found")
-
-	// }
-	// lg.Response = transactions[0]
-	// return &transactions[0], nil
+	if len(transactions) == 0 {
+		lg.Error = "Data Not Found"
+		return nil, errors.New("Data Not Found")
+	}
+	lg.Response = transactions[0]
+	return &transactions[0], nil
 
 }
 
@@ -143,4 +123,28 @@ func (sv *service) GetOrderPrice(refno string) (float64, error) {
 	}
 	lg.Response = amount
 	return amount, nil
+}
+
+func (s *service) EnquipryNextStep(ref_no string, status string) error {
+	db, err := sql.Open("mysql", database.Connect().ConnectionString())
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	statement, err := db.Prepare(`UPDATE orders o 
+	inner join paysolution p on  o.payment_code  = p.payment_code 
+	set o.status=?,
+	p.retry =p.retry + 1,
+	p.last_update =now() 
+	where p.paysolution_ref_no =?;`)
+
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(status, status, ref_no)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

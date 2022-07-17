@@ -63,7 +63,7 @@ func (app *LogExternalParams) WriteExternalLogs() {
 
 func (s *logExternalFormatter) Format(entry *log.Entry) ([]byte, error) {
 
-	msg := fmt.Sprintf(`%v %v path="%v" req="%v" res="%v" err="%+v" %v`+"\n",
+	msg := fmt.Sprintf(`%v %v url="%v" req="%v" res="%v" err="%+v" %v`+"\n",
 		entry.Data["time"],
 		entry.Data["level"],
 		entry.Data["url"],

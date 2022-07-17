@@ -24,8 +24,8 @@ func (sv *service) NewProduct(f *models.ProductModel, uuid string) error {
 	defer db.Close()
 
 	statement, err := db.Prepare(`INSERT INTO product 
-	(product_code, product_name, product_detail, product_size, product_type, uuid) 
-	VALUES(?, ?, ?, ?, ?, ?);`)
+	(product_code, product_name, product_detail, product_size, product_type, template_code, uuid) 
+	VALUES(?, ?, ?, ?, ?, ?, ?);`)
 
 	if err != nil {
 		return err
@@ -36,6 +36,7 @@ func (sv *service) NewProduct(f *models.ProductModel, uuid string) error {
 		f.Product_Detail,
 		f.Product_Size,
 		f.Product_Type,
+		f.Template_code,
 		uuid,
 	)
 	if err != nil {
@@ -56,7 +57,7 @@ func (sv *service) GetProduct(uuid string) ([]models.ProductModel, error) {
 
 	sql := `SELECT distinct  
 	p.product_code,  
-	CASE when COALESCE(pp.product_code, 0)>0 THEN 'connect' ELSE 'disconnect' end as relation,
+	CASE when length(IFNULL(pp.product_code, '')) > 0 THEN 'connect' ELSE 'disconnect' end as relation,
    product_name, 
    product_detail, 
    product_size, 
@@ -132,7 +133,7 @@ func (sv *service) DelProduct(p *models.ProductModel, uuid string) error {
 	sql := `DELETE FROM product
 	WHERE product_code not in (
 	SELECT product_code 
-		FROM order_product  
+		FROM order_product 
 	) and product_code= ? and uuid= ?; `
 
 	statement, err := db.Prepare(sql)

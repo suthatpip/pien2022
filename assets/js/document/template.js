@@ -39,7 +39,13 @@ function newDocument(){
   var document_no = $('#document_no').text();
   var document_name = $('#document_name').val();
   var document_data= editor.getData();  
-  
+  var template_code=  $('#sel-template').val();
+  // var template_name=  $( "#sel-template option:selected" ).text();
+ 
+  if(template_code==null){
+    template_code="";  
+  }
+
   fetch(url + '/template/new', {
       method: 'POST',
       headers: {
@@ -48,7 +54,8 @@ function newDocument(){
       body: JSON.stringify({
         product_code: document_no,
         product_name: document_name,         
-        product_detail: document_data 
+        product_detail: document_data,
+        template_code: template_code
       })
     })
     .then(function (response) {
@@ -70,7 +77,8 @@ function submitdatac2() {
   var file_name = $('#document_name').val();
   var company_code = $('#companys').val();
   var document_no = $('#document_no').text(); 
- 
+   
+   
   $('#document_name').removeClass("is-valid");
   if (isEmpty(file_name)) {  
     $('#document_name').addClass("is-invalid");
@@ -87,7 +95,7 @@ function submitdatac2() {
     newDocument();  
     var file = {};
     var files = [];   
-    file.code= document_no;    
+    file.code= document_no;   
     files.push({...file}); 
   
     var obj= JSON.stringify({
@@ -96,6 +104,8 @@ function submitdatac2() {
       company_code: company_code,
       products: files
     })
+
+
     lockobj();
     // $("#processing").modal('show');
     initpayment(obj);  
@@ -133,5 +143,7 @@ function unlockobj(){
    $('#document_name').removeAttr('disabled');
  
 }
+
+
  
  

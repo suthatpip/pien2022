@@ -31,13 +31,13 @@ func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) 
 
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
-
 	if err := services.NewService().NewProduct(&models.ProductModel{
 		Product_Code:   product.Product_Code,
 		Product_Name:   product.Product_Name,
 		Product_Size:   "-",
 		Product_Detail: product.Product_Detail,
 		Product_Type:   "template",
+		Template_code:  product.Template_code,
 	}, uuid); err != nil {
 		logerror = err.Error()
 		c.Status(http.StatusServiceUnavailable)
@@ -139,6 +139,7 @@ func (ct *controller) DeleteProduct(c *gin.Context, products *models.ProductsMod
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 	for _, v := range products.Products {
+		fmt.Printf("%v %v\n", &v, uuid)
 		services.NewService().DelProduct(&v, uuid)
 	}
 

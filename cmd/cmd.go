@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"net/http"
 	"piennews/helper/jwt"
 	routers "piennews/routes"
@@ -37,7 +36,7 @@ func Run() {
 	router.GET("/jwt-dev", func(c *gin.Context) {
 		maxAge := 86400 * 30
 		jwtcookie, _ := jwt.Generate("e5c1d98e-7f97-4284-9f2d-17022583020e")
-		fmt.Printf("cookie = %v\n", jwtcookie)
+
 		http.SetCookie(c.Writer, &http.Cookie{
 			Name:   "auth",
 			Value:  jwtcookie,

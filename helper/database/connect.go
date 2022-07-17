@@ -26,5 +26,5 @@ func Connect() MySQLService {
 }
 
 func (conn *Connection) ConnectionString() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", conn.User, conn.Password, conn.Host, conn.Port, conn.DB)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?multiStatements=true", conn.User, conn.Password, conn.Host, conn.Port, conn.DB)
 }

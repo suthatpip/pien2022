@@ -21,8 +21,11 @@ type serviceInterface interface {
 	DelProduct(p *models.ProductModel, uuid string) error
 	NewInitPaysolution(payment_code string) (int64, error)
 	InquiryPaysolution(ref_no string) (*models.InquiryModel, error)
-
+	EnquipryNextStep(ref_no string, status string) error
 	GetOrderPrice(refno string) (float64, error)
+
+	Dashboard(uuid string) (*models.DashboardModel, error)
+	GetOrderDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
 }
 
 type service struct {

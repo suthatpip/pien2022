@@ -35,10 +35,11 @@ type SummaryPaymentModel struct {
 	Publish_End_Date   string                 `json:"publish_end_date"`
 	Company_Detail     *SummaryCompanyModel   `json:"company"`
 	Order_Detail       *SummaryOrderModel     `json:"order"`
-	Products_Detail    *[]SummaryProductModel `json:"product"`
+	Products_Detail    *[]SummaryProductModel `json:"products"`
 	Sub_Total          string                 `json:"sub_total"`
 	VAT                string                 `json:"vat"`
 	Total              string                 `json:"total"`
+	Create_Date        string                 `json:"create_date,omitemtry"`
 }
 
 type SummaryCompanyModel struct {
@@ -46,14 +47,15 @@ type SummaryCompanyModel struct {
 	Address   string `json:"address"`
 	Telephone string `json:"telephone"`
 	Logo      string `json:"logo"`
-	Code      string `json:"code"`
+	Code      string `json:"code,omitemtry"`
 }
 
 type SummaryOrderModel struct {
-	Order_No       string `json:"order_no"`
-	Payment_Due    string `json:"payment_due"`
-	Tax_invoice_No string `json:"tax_invoice_no"`
-	Payment_code   string `json:"payment_code"`
+	Order_No         string `json:"order_no,omitemtry"`
+	Payment_Due_Date string `json:"payment_due_date,omitemtry"`
+	Tax_invoice_No   string `json:"tax_invoice_no,omitemtry"`
+	Payment_Code     string `json:"payment_code,omitemtry"`
+	Payment_Date     string `json:"payment_date,omitemtry"`
 }
 
 type SummaryProductModel struct {
@@ -63,6 +65,9 @@ type SummaryProductModel struct {
 	End_Date     string `json:"end_date"`
 	Days         string `json:"days"`
 	Product_Baht string `json:"product_baht"`
+	Detail       string `json:"detail,omitemtry"`
+	Type         string `json:"type,omitemtry"`
+	Size         string `json:"size,omitemtry"`
 }
 
 type DeleteInitPayment struct {
@@ -70,5 +75,9 @@ type DeleteInitPayment struct {
 }
 
 type SubmitPayment struct {
+	Payment_code string `uri:"code" binding:"required"`
+}
+
+type QueryPayment struct {
 	Payment_code string `uri:"code" binding:"required"`
 }

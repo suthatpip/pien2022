@@ -10,7 +10,6 @@ import (
 	"piennews/models"
 	"piennews/services"
 
-	"strings"
 	"time"
 
 	"github.com/bojanz/currency"
@@ -133,6 +132,7 @@ func setPayment(v *models.InitPaymentModel) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	err = services.NewService().SubmitProduct(*v.Products, payment_code)
 	if err != nil {
 		return "", err
@@ -142,6 +142,7 @@ func setPayment(v *models.InitPaymentModel) (string, error) {
 }
 
 func getOrderNo() string {
+
 	d, _ := goment.New(time.Now().Format("02-01-2006"), "DD-MM-YYYY")
-	return fmt.Sprintf("A%v-%v-%v ", d.Format("YY"), util.RandInt(1000, 9999), strings.ToUpper(util.RandSeq(4)))
+	return fmt.Sprintf("P%v%v", fmt.Sprintf("%.2d", d.Month()), d.Year()+543)
 }

@@ -76,9 +76,9 @@ var Thailand = Config{
 	FutureSuffix: "",
 
 	Periods: []FormatPeriod{
-		{time.Second, "ประมาณหนึ่งวินาที", "%d วินาที"},
-		{time.Minute, "ประมาณหนึ่งนาที", "%d นาที"},
-		{time.Hour, "ประมาณหนึ่งชั่วโมง", "%d ชั่วโมง"},
+		{time.Second, "เมื่อสักครู่", "%d วินาที"},
+		{time.Minute, "เมื่อสักครู่", "%d นาที"},
+		{time.Hour, "ประมาณ หนึ่งชั่วโมง", "%d ชั่วโมง"},
 		{Day, "1 วัน", "%d  วัน"},
 		{Month, "1 เดือน", "%d เดือน"},
 		{Year, "1 ปี", "%d ปี"},

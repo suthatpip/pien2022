@@ -1,6 +1,6 @@
  
 function initpayment(obj) { 
-
+ 
     fetch(url + '/payment/init', {
         method: 'POST',
         headers: {
@@ -16,7 +16,7 @@ function initpayment(obj) {
           return response.json();
       })
       .then(function (data) { 
-        
+     
         $('#_company_name').text(data.company.name);
   
         $('#_name').text(data.customer_name);
@@ -24,13 +24,15 @@ function initpayment(obj) {
         $('#_telephone').text(data.company.telephone);
         $('#_customer_code').text(data.company.code);
         $('#_company_logo').attr("src", data.company.logo);
-  
+    
         $('#_order').text(data.order.order_no);
-        $('#_payment_due_date').text(data.order.payment_due);
+        $('#_payment_due_date').text(data.order.payment_due_date);
+       
         $('#_tax_invoice_no').text(data.order.tax_invoice_no);
         $('#_payment_code').text(data.order.payment_code);
-        var html=``
-        data.product.forEach(obj => {
+        
+        var html=``;
+        data.products.forEach(obj => {
  
           html +=`
           <tr class="text-sm">
@@ -44,17 +46,17 @@ function initpayment(obj) {
 
         })
         $('#summary_products').html(html);      
-        $('#_product_baht').text(data.product.product_baht);
+        $('#_product_baht').text(data.products.product_baht);
         $('#_sub_total').text(data.sub_total);
         $('#_vat').text(data.vat);
         $('#_total').text(data.total);  
         
         stepper.next();
         
-        // $("#processing").modal('hide'); 
+     
       })
       .catch(err =>{
-          //  $('#processing').modal('hide'); 
+       
       });
 
 }

@@ -187,7 +187,7 @@ function submitdataf2() {
           company_code: company_code,
           products: files
         })
-        $("#processing").modal('show');
+        // $("#processing").modal('show');
         initpayment(obj);
     } 
   } 

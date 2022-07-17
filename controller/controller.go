@@ -20,6 +20,9 @@ type controllerInterface interface {
 	DeleteProduct(c *gin.Context, products *models.ProductsModel)
 
 	ConfirmPayment(c *gin.Context, pay *models.SubmitPayment)
+
+	Dashboard(c *gin.Context)
+	DashboardOrderDetail(c *gin.Context, payment_code string)
 }
 
 type controller struct {

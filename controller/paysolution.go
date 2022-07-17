@@ -6,6 +6,7 @@ import (
 	"piennews/helper/config"
 	"piennews/helper/jwt"
 	"piennews/helper/logs"
+	"piennews/helper/util"
 	"piennews/models"
 	"piennews/services"
 	"time"
@@ -56,38 +57,40 @@ func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPaymen
 		"paysolution_productdetail": fmt.Sprintf("ประกาศหนังสือพิมพ์ (%v-%v)", pay.Publish_Start_Date, pay.Publish_End_Date),
 		"paysolution_total":         pay.Total,
 	})
-
 }
 
 func PaysolutionInquiry(ref_no string) {
 	lg := &logs.LogExternalParams{}
+	lg.Url = "PaySolution: Inquiry"
+	lg.Request = ref_no
+	services.NewService().EnquipryNextStep(ref_no, config.GetOrderStatus().VALIDATE_PAYMENT)
 
 	defer func(begin time.Time) {
 		lg.Begin = begin
 		logs.ExternalLogs(lg).WriteExternalLogs()
 	}(time.Now())
-	lg.Request = ref_no
+
 	inquiry, err := services.NewService().InquiryPaysolution(ref_no)
 	if err != nil {
 		lg.Error = err.Error()
 		return
 	}
 
+	services.NewService().EnquipryNextStep(ref_no, config.GetOrderStatus().PENDING_PAYMENT)
 	if inquiry.Status == "COMPLETE" {
-		v, err := services.NewService().GetOrderPrice("809418710155847")
+		v, err := services.NewService().GetOrderPrice(ref_no)
 		if err != nil {
 			lg.Error = err.Error()
 			return
 		}
 		if v == inquiry.Total {
+			services.NewService().EnquipryNextStep(ref_no, config.GetOrderStatus().PAYMENT_COMPLETED)
 			lg.Response = fmt.Sprintf("COMPLETE: %v == %v", inquiry.Total, v)
 			return
 		}
-
 		lg.Response = fmt.Sprintf("INCOMPLETE: %v != %v", inquiry.Total, v)
-
 	} else {
+		lg.Response = util.SigleLine(fmt.Sprintf("INCOMPLETE: %+v", inquiry))
 		lg.Error = inquiry.Status
 	}
-
 }

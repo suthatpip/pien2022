@@ -19,21 +19,8 @@ func Paysolution(rg *gin.RouterGroup) {
 			return
 		}
 
-		fmt.Printf("%+v\n", paysolution)
+		controller.PaysolutionInquiry(paysolution.Ref_no)
 
-		// paysolutionModel := &service.PaysolutionModel{}
-		// paysolutionModel.Ref_no = callback.Ref_no
-		// paysolutionModel.Merchant_id = callback.Merchant_id
-		// paysolutionModel.Customere_mail = callback.Customere_mail
-		// paysolutionModel.Product_detail = callback.Product_detail
-		// paysolutionModel.Total = callback.Total
-		// paysolutionModel.Card_type = callback.Card_type
-		// err := service.PaysolutionControl().PaysolutionCallback(paysolutionModel)
-
-		// if err != nil {
-		// 	c.String(http.StatusBadRequest, "Error")
-		// 	return
-		// }
 		c.String(http.StatusOK, "OK")
 	})
 

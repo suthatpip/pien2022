@@ -11,19 +11,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="icon" type="image/png" href="/assets/img/logo.png">
   <title>AdminLTE 3 | Starter</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/assets/plugins/fontawesome-free-6.1.1/css/all.min.css">
 
-   <!-- Custom style -->
-   <link rel="stylesheet" href="/assets/css/custom.css">
+  <!-- Custom style -->
+  <link rel="stylesheet" href="/assets/css/custom.css">
 
   <!-- Theme style -->
-  <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+  <link rel="stylesheet" href="/assets/css/adminlte.css">
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
 
 </head>
 
@@ -154,19 +152,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/template/a" id="template-a"  class="nav-link">
+                  <a href="/template/a" id="template-a" class="nav-link">
                     <i class="nav-icon fas fa-solid fa-file-lines"></i>
                     <p>บริษัทสามัญ</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/template/b" id="template-b"  class="nav-link">
+                  <a href="/template/b" id="template-b" class="nav-link">
                     <i class="nav-icon fas fa-solid fa-file-lines"></i>
                     <p>บริษัทวิสามัญ</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/template/c" id="template-c"  class="nav-link">
+                  <a href="/template/c" id="template-c" class="nav-link">
                     <i class="nav-icon fas fa-solid fa-file-lines"></i>
                     <p>ห้างหุ้นส่วนจำกัด</p>
                   </a>
@@ -198,82 +196,110 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <div class="card ">
+              <div class="card">
                 <div class="card-body">
                   <p>รายการทั้งหมด </p>
                   <a class="btn btn-app">
-                    <span class="badge bg-danger">67</span>
+                    <span class="badge bg-danger text-sm">{{.pending_payment_total}}</span>
                     <i class="fas fa-solid fa-money-check-dollar"></i></i> รอชำระเงิน
                   </a>
                   <a class="btn btn-app">
-                    <span class="badge bg-warning">300</span>
+                    <span class="badge bg-warning text-sm">{{.on_process_total}}</span>
                     <i class="fas fa-solid fa-clipboard-check"></i>รอประกาศ
                   </a>
                   <a class="btn btn-app">
-                    <span class="badge bg-success">3</span>
+                    <span class="badge bg-success text-sm">{{.publish_total}}</span>
                     <i class="fas fa-solid fa-earth-americas"></i>ออนไลท์
                   </a>
-                  <table class="table table-sm text-sm">
-                    <thead>
-                      <tr>
-                        <th style="width: 10px">#</th>
-                        <th>รายการ</th>
-                        <th>สถานะ</th>
-                        <th>วันที่สร้าง</th>
-                        <th>วันที่ชำระเงิน</th>
-                        <th>กำหนดวันที่ประกาศ</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td><span class="badge bg-danger">รอการชำระเงิน</span> </td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>10 ม.ค. 2565</td>
-                        <td>
-                          <button type="button" class="btn btn-block btn-primary btn-sm">ชำระเงิน 49 บาท</button>
-                        </td>
 
-                      </tr>
-                      <tr>
-                        <td>2.</td>
-                        <td>Update software</td>
-                        <td><span class="badge bg-warning">รอประกาศ</span> </td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>10 ม.ค. 2565</td>
-                        <td>
-                          <span class="badge bg-warning"><i class="fas fa-solid fa-eye"></i></span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3.</td>
-                        <td>Update software</td>
-                        <td><span class="badge bg-success">ลงประกาศเรียบร้อย</span> </td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>10 ม.ค. 2565</td>
-                        <td>
-                          <span class="badge bg-success"><i class="fas fa-solid fa-eye"></i></span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>4.</td>
-                        <td>Update software</td>
-                        <td><span class="badge bg-success">ลงประกาศเรียบร้อย</span> </td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>1 ม.ค. 2565</td>
-                        <td>10 ม.ค. 2565</td>
-                        <td>
-                          <span class="badge bg-success"><i class="fas fa-solid fa-eye"></i></span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+
+                
+                    <div class="scroll-content" id="order-list">
+                      <table class="table table-sm text-sm  "  >
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th style="width:150px">ออร์เดอร์</th>
+                            <th style="width:250px">รายการ</th>
+                            <th class="text-center" style="width:100px">สถานะ</th>
+                            <th>วันที่สร้าง</th>
+                            <th>วันที่ประกาศ</th>
+                            <th>วันที่สิ้นสุด</th>    
+                            <th>วันที่ชำระเงิน</th>
+                            <th>จำนวนวัน</th>   
+                            <th  style="width:150px">ราคา</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody >                
+                          {{ range .orders }}
+                          <tr>
+                            <td>
+                              <div class="flex-container">
+                                <div>{{if ( eq .Order_Status_Level "BUILD") }}
+                                  <i class="fas fa-circle fa-1x text-secondary"  data-toggle="tooltip" data-placement="top" data-html="true" title="เริ่มต้น"></i>  
+                                  {{end}}  
+    
+                                  {{if ( eq .Order_Status_Level "PROCESS") }}
+                                  <i class="fas fa-circle fa-1x text-secondary" data-toggle="tooltip" data-placement="top" data-html="true" title="กำลังประมวลผล"></i> 
+                                  {{end}} 
+    
+                                  {{if ( eq .Order_Status_Level "WAITPAYMENT") }}
+                                  <i class="fas fa-circle fa-1x text-primary" data-toggle="tooltip" data-placement="top" data-html="true" title="รอการชำระเงิน"></i>                     
+                                  {{end}} 
+    
+                                  {{if ( eq .Order_Status_Level "PAYMENTCOMPLETE") }}
+                                  <i class="fas fa-circle fa-1x text-green" data-toggle="tooltip" data-placement="top" data-html="true" title="การชำระเงินเรียบร้อย"></i>
+                                  {{end}} 
+    
+                                  {{if ( eq .Order_Status_Level "ONLINE") }}
+                                  <i class="fas fa-circle fa-1x text-green" data-toggle="tooltip" data-placement="top" data-html="true" title="กำลังออนไลท์"></i>
+                                  {{end}} 
+    
+                                  {{if ( eq .Order_Status_Level "ERROR") }}
+                                  <i class="fas fa-circle fa-1x text-secondary" data-toggle="tooltip" data-placement="top" data-html="true" title="พบความผิดปกติ"></i>
+                                  {{end}} 
+    
+                                  {{if ( eq .Order_Status_Level "COMPLETE") }}
+                                  <i class="fas fa-circle fa-1x text-secondary" data-toggle="tooltip" data-placement="top" data-html="true" title="เรียบร้อย"></i> 
+                                  {{end}}  </div>
+
+                                <div data-toggle="tooltip" data-placement="top" title="รายละเอียด" >
+                                  <a><i class="fas fa-1x fa-solid fa-eye text-secondary" data-toggle="modal" data-target="#orderDetailModal" data-payment-code="{{ .Payment_Code }}"></i></a>
+                                   
+                                </div>
+                                <div data-toggle="tooltip" data-placement="top" title="สถิติ">
+                                  <a><i class="fas fa-1x fa-solid fa-square-poll-vertical text-danger"></i></a> 
+                                </div>                                                             
+                              </div>
+                            
+                            
+                            </td>
+                            <td>{{ .Order_No }}</td>
+                            <td>{{ .Product_Name }}</td>
+                            <td class="text-center"> 
+                              {{if ( eq .Order_Status_Level "WAITPAYMENT") }}
+                                <span class="badge bg-danger">{{ .Order_Status_Message }}</span> 
+                              {{end}}  
+                            </td>
+                            <td>{{ .Order_Create_Date }}</td>
+                            <td>{{ .Start_Date }}</td>
+                            <td>{{ .End_Date }}</td>
+                            <td>{{ .Payment_Date }}</td>
+                            <td>{{ .Days }} วัน</td>
+                            <td>{{ .Order_Total }} บาท</td>                             
+                            <td>
+                              {{if ( eq .Order_Status_Level "WAITPAYMENT") }}
+                                <a type="button" class="btn btn-block btn-primary btn-sm" href="/paysolution/{{ .Payment_Code }}"> ชำระเงิน </a>
+                              {{end}}     
+                          </tr>
+                          {{end}}
+                        </tbody>
+                      </table>
+                    </div>
+                  
+                    
+                </div> 
                 <div class="card-footer clearfix">
                   <ul class="pagination pagination-sm m-0 float-right">
                     <li class="page-item"><a class="page-link" href="#">«</a></li>
@@ -426,6 +452,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Order No. <span class="text-secondary">P072565/00000001</span> </h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="jumbotron ">
+              <div id="order_detail">
+                <div id="processing_message" class="text-center" style="width: 100%;"> 
+                  <div class="lds-ring "><div></div><div></div><div></div><div></div></div>
+                </div> 
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+ 
     <!-- Main Footer -->
     <footer class="main-footer">
 
@@ -436,7 +485,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="/assets/plugins/jquery/jquery.min.js"></script>
   <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/plugins/chart.js/Chart.min.js"></script>
+  <script src="/assets/plugins/smooth-scrollbar/smooth-scrollbar.js"></script>
+  <script src="/assets/js/pages/dashboard.js"></script>
   <script src="/assets/js/adminlte.min.js"></script>
+  <script> 
+    var Scrollbar = window.Scrollbar; 
+    Scrollbar.init(document.querySelector("#order-list"), {
+      speed: 0.7,
+      damping:0.2
+    }); 
+  </script>
   <script>
     $(function () {
 
@@ -493,6 +551,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     })
   </script>
+
+<script>
+  $(function () {
+   $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+ 
 </body>
 
 </html>

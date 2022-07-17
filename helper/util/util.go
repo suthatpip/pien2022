@@ -120,6 +120,11 @@ func DateTH(date string) string {
 	return fmt.Sprintf("%v %v %v", d.Date(), month[d.Month()-1], d.Year()+543)
 }
 
+func Date543TH(date string) string {
+	d, _ := goment.New(date, "DD/MM/YYYY HH:mm:ss")
+	return fmt.Sprintf("%.2d/%.2d/%v %.2d:%.2d:%.2d", d.Date(), d.Month(), d.Year()+543, d.Hour(), d.Minute(), d.Second())
+}
+
 var (
 	suffixes [5]string
 )

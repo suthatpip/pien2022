@@ -12,4 +12,5 @@ type ProductModel struct {
 	Product_Type        string `json:"product_type"`
 	Product_Create_Date string `json:"product_create_date"`
 	Product_Connect     string `json:"product_connect"`
+	Template_code       string `json:"template_code"`
 }
