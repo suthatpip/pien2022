@@ -59,15 +59,16 @@ type SummaryOrderModel struct {
 }
 
 type SummaryProductModel struct {
-	No           int    `json:"no"`
-	Product      string `json:"product"`
-	Start_Date   string `json:"start_date"`
-	End_Date     string `json:"end_date"`
-	Days         string `json:"days"`
-	Product_Baht string `json:"product_baht"`
-	Detail       string `json:"detail,omitemtry"`
-	Type         string `json:"type,omitemtry"`
-	Size         string `json:"size,omitemtry"`
+	No            int    `json:"no"`
+	Product       string `json:"product"`
+	Start_Date    string `json:"start_date"`
+	End_Date      string `json:"end_date"`
+	Days          string `json:"days"`
+	Product_Baht  string `json:"product_baht"`
+	Detail        string `json:"detail,omitemtry"`
+	Type          string `json:"type,omitemtry"`
+	Size          string `json:"size,omitemtry"`
+	Template_code string `json:"template_code,omitemtry"`
 }
 
 type DeleteInitPayment struct {

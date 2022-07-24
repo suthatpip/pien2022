@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pien | Passcode</title>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/fontawesome-free-6.1.1/css/all.css"
+    />
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/assets/css/adminlte.css" />
+  </head>
+
+  <body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="register-logo">
+        <img src="/assets/img/logo.png" />
+      </div>
+
+      <div class="card">
+        <div class="card-body register-card-body">
+          <p class="login-box-msg">เข้าสู่ระบบ</p>
+          <form action="/auth/email" method="post">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                autocomplete="nope"
+                placeholder="Full name"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                autocomplete="nope"
+                placeholder="Email"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button
+                  type="submit"
+                  class="btn btn-block btn-primary text-center"
+                >
+                  <i class="fab fa-solid fa-paper-plane mr-2 float-start"></i>
+                  เข้าสู่ระบบด้วยเมล์
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/adminlte.min.js"></script>
+  </body>
+  <footer class="text-xs text-secondary">
+    Copyright &copy; PIEN CORPORATION CO., LTD
+  </footer>
+</html>

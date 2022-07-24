@@ -11,7 +11,8 @@ import (
 func Product(rg *gin.RouterGroup) {
 
 	rg.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "product.html", nil)
+		controller.NewController().Product(c)
+
 	})
 
 	rg.GET("/list", func(c *gin.Context) {

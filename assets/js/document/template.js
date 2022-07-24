@@ -113,6 +113,7 @@ function submitdatac2() {
 
 function previous(){
   var payment_code=$('#_payment_code').text();
+  
   fetch(url + '/payment/delete/all', {
       method: 'POST',
       headers: {

@@ -153,17 +153,16 @@ function filelist(){
       })
 }
 
-
 function submitdataf1() {   
   
     var files = new Array();
+
     $.each($("input[name='file_group[]']:checked"), function() {
-        files.push($(this).val());      
+        files.push($(this).val()); 
     });
 
     if (files.length == 0 ){
-        Swal.fire('เลือกไฟล์อย่างน้อย 1 ไฟล์')
-       
+        Swal.fire('เลือกไฟล์อย่างน้อย 1 ไฟล์') 
     }else{
         stepper.next();
     }

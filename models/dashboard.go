@@ -6,9 +6,10 @@ type DashboardModel struct {
 }
 
 type DashboardSummaryModel struct {
-	PENDING_PAYMENT string
-	ON_PROCESS      string
-	PUBLISH         string
+	ALL             int64
+	PENDING_PAYMENT int64
+	ON_PROCESS      int64
+	PUBLISH         int64
 }
 
 type DashboardOrderModel struct {

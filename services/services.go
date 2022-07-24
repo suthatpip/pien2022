@@ -1,11 +1,16 @@
 package services
 
-import "piennews/models"
+import (
+	"piennews/models"
+)
 
 type serviceInterface interface {
 	GetCompany(company_id string) models.CompanyModel
 	GetCompanyList(uuid string) ([]models.CompanyModel, error)
-	GetCustomer(uuid string) models.CustomerModel
+
+	GetCustomerWithAccount(account string) (*models.CustomerModel, bool)
+	GetCustomerWithUUID(uuid string) (*models.CustomerModel, bool)
+
 	AddPayment(payment *models.AddPaymentModel) error
 	GetPaymentDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
 	DeletePayment(p *models.DeleteInitPayment, uuid string) error
@@ -24,8 +29,10 @@ type serviceInterface interface {
 	EnquipryNextStep(ref_no string, status string) error
 	GetOrderPrice(refno string) (float64, error)
 
-	Dashboard(uuid string) (*models.DashboardModel, error)
+	Dashboard(uuid string, status []string) (*models.DashboardModel, error)
 	GetOrderDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
+
+	Customer(u *models.NewCustomerModel) error
 }
 
 type service struct {

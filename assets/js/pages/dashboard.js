@@ -51,12 +51,16 @@ $('#orderDetailModal').on('shown.bs.modal', function (e) {
             <dt class="col-sm-3">ราคา </dt>
             <dd class="col-sm-9">` + products.product_baht + `</dd>`
             if(products.type=="file"){
-                html +=`<dt class="col-sm-3">ไฟล์</dt>
+                html +=`
+                <dt class="col-sm-3">ไฟล์</dt>
                 <dd class="col-sm-9">` + products.detail + `</dd> 
                 <dt class="col-sm-3">ขนาด</dt>
                 <dd class="col-sm-9">` + products.size + `</dd>` 
             }else{
-                html +=`<dt class="col-sm-3">x</dt>
+                html +=`
+                <dt class="col-sm-3">เทมเพลต</dt>
+                <dd class="col-sm-9">` + products.template_code + `</dd> 
+                <dt class="col-sm-3">ตัวอย่าง</dt>
                 <dd class="col-sm-9">` + products.detail + `</dd> ` 
                
             } 

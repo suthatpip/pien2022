@@ -72,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
       </ul>
     </nav>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
       <a href="/" class="brand-link">
         <img src="/assets/img/logo.png" alt="pien" class="brand-image " style="opacity: .8">
         <span class="brand-text font-weight-light">Admin Pien</span>
@@ -80,10 +80,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/assets/img/user-default.jpg" class=" img-circle elevation-1">
+            <img src="{{.customer.profile}}" class=" img-circle elevation-1">             
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander</a>
+            {{.customer.name}} 
+            <!-- <a href="#" class="d-block"> </a> -->
           </div>
         </div>
         <nav class="mt-2">
@@ -99,14 +100,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div>
               <hr class="hr-sidebar">
             </div>
-            <li class="nav-header text-white-50">ข้อมูลส่วนตัว
+            <li class="nav-header text-white-50">จัดการข้อมูลส่วนตัว
             </li>
 
             <li class="nav-item ">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-solid fa-circle-user"></i>
                 <p>
-                  จัดการข้อมูลส่วนตัว
+                  ข้อมูลส่วนตัว
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -129,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item ">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle-arrow-up"></i>
-                <p>การอัพโหลด
+                <p>อัพโหลด
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -146,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle-arrow-up"></i>
-                <p>จัดการเอกสาร
+                <p>เทมเพลต
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -170,9 +171,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
               </ul>
-            </li>
-          </ul>
-        </nav>
+            </li>  
+
+          </ul> 
+        </nav> 
+      </div>
+      <div class="sidebar-custom">      
+        <a href="/logout" class="btn btn-secondary hide-on-collapse pos-right text-sm">Logout</a>
       </div>
     </aside>
     <!-- Content Wrapper. Contains page content -->
@@ -199,15 +204,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="card">
                 <div class="card-body">
                   <p>รายการทั้งหมด </p>
-                  <a class="btn btn-app">
-                    <span class="badge bg-danger text-sm">{{.pending_payment_total}}</span>
+                  <a class="btn btn-app" href="/dashboard">
+                    <span class="badge bg-danger text-sm">{{.order_total}}</span>
+                      <i class="fas fa-solid fa-bullseye"></i>
+                    ทั้งหมด
+                  </a>
+                  <a class="btn btn-app" href="/dashboard/s-002">
+                    <span class="badge bg-primary text-sm">{{.pending_payment_total}}</span>
                     <i class="fas fa-solid fa-money-check-dollar"></i></i> รอชำระเงิน
                   </a>
-                  <a class="btn btn-app">
+                  <a class="btn btn-app" href="/dashboard/s-004"> 
                     <span class="badge bg-warning text-sm">{{.on_process_total}}</span>
                     <i class="fas fa-solid fa-clipboard-check"></i>รอประกาศ
                   </a>
-                  <a class="btn btn-app">
+                  <a class="btn btn-app" href="/dashboard/s-005"> 
                     <span class="badge bg-success text-sm">{{.publish_total}}</span>
                     <i class="fas fa-solid fa-earth-americas"></i>ออนไลท์
                   </a>
@@ -241,7 +251,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                   {{end}}  
     
                                   {{if ( eq .Order_Status_Level "PROCESS") }}
-                                  <i class="fas fa-circle fa-1x text-secondary" data-toggle="tooltip" data-placement="top" data-html="true" title="กำลังประมวลผล"></i> 
+                                  <i class="fas fa-circle fa-1x text-warning" data-toggle="tooltip" data-placement="top" data-html="true" title="กำลังประมวลผล"></i> 
                                   {{end}} 
     
                                   {{if ( eq .Order_Status_Level "WAITPAYMENT") }}

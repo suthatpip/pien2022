@@ -184,7 +184,7 @@ func (s *service) DeleteProductAndPayment(p *models.DeleteInitPayment, uuid stri
 	WHERE product_code IN ( 
 		SELECT pp.product_code  
 		FROM orders o INNER JOIN order_product pp ON o.payment_code = pp.payment_code 
-		WHERE o.payment_code =? AND o.customer_uuid =? AND o.status =0 
+		WHERE o.payment_code =? AND o.customer_uuid = ? 
 	) AND product_type ='template';`
 
 	_, err = tx.Exec(sql, p.Payment_code, uuid)
@@ -192,7 +192,7 @@ func (s *service) DeleteProductAndPayment(p *models.DeleteInitPayment, uuid stri
 		tx.Rollback()
 		return err
 	}
-	sql = `DELETE FROM orders WHERE payment_code =? and customer_uuid=? and status=0;`
+	sql = `DELETE FROM orders WHERE payment_code = ? and customer_uuid= ? ;`
 
 	_, err = tx.Exec(sql, p.Payment_code, uuid)
 	if err != nil {
@@ -248,7 +248,7 @@ func (s *service) GetOrderDetail(pay_code string, uuid string) (*models.SummaryP
 	o.sub_total_baht, 
 	o.vat, 
 	o.total_baht,
-	CONCAT(cus.first_name, ' ', cus.last_name) as customer_name, 
+	cus.name as customer_name, 
 	com.name as company_name,  
 	com.address, 
 	com.telephone, 
@@ -257,7 +257,8 @@ func (s *service) GetOrderDetail(pay_code string, uuid string) (*models.SummaryP
 	p.product_name, 
 	p.product_detail ,
 	p.product_type, 
-	p.product_size 
+	p.product_size ,	
+	IFNULL(p.template_code,'') 
 	FROM orders o 
 	inner join company com on o.company_code = com.code 
 	inner join customer cus on com.customer_uuid =cus.uuid 
@@ -274,7 +275,7 @@ func (s *service) GetOrderDetail(pay_code string, uuid string) (*models.SummaryP
 	var order_no, tax_invoice_no, payment_code, payment_date,
 		create_date, start_date, end_date, days, sub_total_baht, vat,
 		total_baht, customer_name, company_name, address, telephone, code, logo, product_name, product_detail,
-		product_type, product_size string
+		product_type, product_size, template_code string
 
 	no := 0
 	for list.Next() {
@@ -300,6 +301,7 @@ func (s *service) GetOrderDetail(pay_code string, uuid string) (*models.SummaryP
 			&product_detail,
 			&product_type,
 			&product_size,
+			&template_code,
 		)
 		no++
 
@@ -308,15 +310,16 @@ func (s *service) GetOrderDetail(pay_code string, uuid string) (*models.SummaryP
 		}
 
 		product := models.SummaryProductModel{
-			No:           no,
-			Product:      product_name,
-			Start_Date:   util.Date543TH(start_date),
-			End_Date:     util.Date543TH(end_date),
-			Days:         days,
-			Product_Baht: "49 บาท",
-			Detail:       product_detail,
-			Type:         product_type,
-			Size:         product_size,
+			No:            no,
+			Product:       product_name,
+			Start_Date:    util.Date543TH(start_date),
+			End_Date:      util.Date543TH(end_date),
+			Days:          days,
+			Product_Baht:  "49 บาท",
+			Detail:        product_detail,
+			Type:          product_type,
+			Size:          product_size,
+			Template_code: template_code,
 		}
 		products = append(products, product)
 		if err != nil {

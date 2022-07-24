@@ -85,8 +85,12 @@ func (ct *controller) DeleteInitAllPayment(c *gin.Context, del *models.DeleteIni
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 
-	services.NewService().DeleteProductAndPayment(del, uuid)
-
+	err := services.NewService().DeleteProductAndPayment(del, uuid)
+	if err != nil {
+		logerror = err.Error()
+		c.Status(http.StatusServiceUnavailable)
+		return
+	}
 	c.Status(http.StatusOK)
 }
 

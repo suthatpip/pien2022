@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100;200;300;400;500;600&display=swap');
+
+:root {
+  --bs-font-sans-serif: "Noto Sans Thai", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-font-family: var(--bs-font-sans-serif); 
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem
+}
+
+html,
+body {
+ 
+  height: 100%;
+  background-color: #f8f9fa;
+ 
+  font-family: var(--bs-body-font-family);
+} 
+
+.logo {
+  width: auto;
+  height: auto; 
+  margin-bottom: 10px;
+}
+
+.logo> img { 
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 90%;  */
+
+  max-width: 60%;
+  height: auto;
+
+}
+
+.center {
+  margin: auto;
+  text-align: center; 
+}
+
+ 
+
+.content{
+  /* height: 500px;  */
+  /* background-color: #343a40; */
+  background: linear-gradient(to right, #343a40, #68727C);
+ 
+}
+
+.rounded {
+  border-radius: .35rem !important
+}
+
+.sign-in-content > img   {
+  max-width: 50%;
+}
+
+.sign-in-content   {
+  text-align: center; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.sign-in-content > p {
+  color:#eef2f7;
+  font-weight: 400;
+  line-height: 2.0;
+  font-size: 2rem;
+}
+
+
+
+
+
+
+.middle{
+  text-align: center;  
+  justify-content: center; 
+  align-items: center;
+}
+ 
+
+.card-signin {
+  border: 0;
+  border-radius: 0rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem
+}
+
+.card-signin .card-body {
+  padding: 2rem
+}
+
+.form-signin {
+  width: 100%
+} 
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem
+}
+
+.form-label-group input {
+  height: 40px;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x)
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out
+}
+
+.form-control:focus {
+  box-shadow: 10px 0px 0px 0px #ffffff !important
+}
+ 
+.btn-facebook {
+  background-color: #3B5998;
+  color: azure;
+  width: 100%;
+}  
+
+.btn-google {
+  background-color: #DE4032;
+  color: azure;
+  width: 100%;
+}
+ 
+.btn-line {
+  background-color: #00B900;
+  color: azure;
+  width: 100%;
+} 
+
+.btn-email {
+  background-color: #343a40;
+  color: azure;
+  width: 100%;
+}
+.btn-google:hover,
+.btn-facebook:hover,
+.btn-line:hover,
+.btn-email:hover {
+  color: azure;
+}
+ 
+.form-mail {
+  width: 100%;
+  height: 20px;
+  border-color: #dedede;
+  border-style: solid;
+  border-radius: 50px;
+}
+
+.form-mail:focus {
+  outline: none;
+}
+
+.text-info-mail{
+  color: #AAB7B8;
+  font-size: small;
+} 
+ 
+.strike {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+  color: #ccc;
+  font-size: .75rem;
+}
+
+.strike > span:before,
+.strike > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #dbdbdb;
+}
+
+.strike > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strike > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+ 
+.about{
+  margin-top: 30px;
+}
+.about-menu > ul{
+  text-decoration: none;
+  display: block;
+  color: rgba(0,0,0,.54);
+  list-style-type: none;
+  margin: 0 0 1.5625rem;
+  padding: 0;
+}
+ 
+.about-menu>ul>li>a{
+  text-decoration: none;
+  color: rgba(0,0,0,.54);
+  font-family: Helvetica;
+  font-size: .75rem;
+} 
+
+.contact-logo{
+  padding-left: 0;
+  padding-right: 0.3rem; 
+}
+
+
+@media (min-width: 375px) { 
+  .sign-in-content > p {
+    font-size: x-large;     
+  }   
+  .sign-in-content > img {
+    width: 30%;   
+    margin-top: 200px;
+  }
+  
+}
+
+
+@media (min-width: 414px) {
+  .sign-in-content > p {
+    font-size: x-large;     
+  }   
+  .sign-in-content > img {
+    width: 30%;   
+    margin-top: 200px;  
+  }
+}
+
+@media (min-width: 768px) {
+  .sign-in-content > p {
+    font-size: xx-large;  
+    margin-left: 200px;   
+  }   
+  .sign-in-content > img {
+    width: 100%;   
+    margin-top: 0px;
+    margin-left: 200px;
+  
+  }
+}
+ 
+@media (max-width: 1200px) { 
+  .card-signin{
+      width: 80%;
+  }
+}
+@media (min-width: 1200.01px) {
+  .card-signin{
+    width: 50%;
+  } 
+}
+   
+.newClass{
+  visibility: hidden
+}
+

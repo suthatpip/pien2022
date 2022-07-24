@@ -72,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
       </ul>
     </nav>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
       <a href="/" class="brand-link">
         <img src="/assets/img/logo.png" alt="pien" class="brand-image " style="opacity: .8">
         <span class="brand-text font-weight-light">Admin Pien</span>
@@ -80,10 +80,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/assets/img/user-default.jpg" class=" img-circle elevation-1">
+            <img src="{{.customer.profile}}" class=" img-circle elevation-1">             
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander</a>
+            <a href="#" class="d-block">{{.customer.name}}  </a>
           </div>
         </div>
         <nav class="mt-2">
@@ -99,14 +99,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div>
               <hr class="hr-sidebar">
             </div>
-            <li class="nav-header text-white-50">ข้อมูลส่วนตัว
+            <li class="nav-header text-white-50">จัดการข้อมูลส่วนตัว
             </li>
 
             <li class="nav-item menu-open">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-solid fa-circle-user"></i>
                 <p>
-                  จัดการข้อมูลส่วนตัว
+                   ข้อมูลส่วนตัว
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -129,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item ">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle-arrow-up"></i>
-                <p>การอัพโหลด
+                <p>อัพโหลด
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -173,6 +173,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
           </ul>
         </nav>
+      </div>
+      <div class="sidebar-custom">      
+        <a href="/logout" class="btn btn-secondary hide-on-collapse pos-right text-sm">Logout</a>
       </div>
     </aside>
 

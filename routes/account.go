@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"net/http"
+	"piennews/controller"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +10,6 @@ func Account(rg *gin.RouterGroup) {
 
 	rg.GET("/", func(c *gin.Context) {
 
-		c.HTML(http.StatusOK, "account.html", nil)
+		controller.NewController().Account(c)
 	})
 }

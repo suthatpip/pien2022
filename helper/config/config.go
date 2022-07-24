@@ -5,6 +5,7 @@ import (
 )
 
 const Price float64 = 49
+const Token_expire int64 = 86400 * 30
 
 type Env struct {
 	OWNER       string `env-default:"piennews"`

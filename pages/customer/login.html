@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pien | Registration</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="/assets/plugins/fontawesome-free-6.1.1/css/all.css">
+    <link rel="stylesheet" href="/assets/css/auth.css" /> 
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/css/adminlte.css">
+  <link rel="stylesheet" href="/assets/plugins/sweetalert2/sweetalert2.css"> 
+  </head>
+
+  <body class="hold-transition lockscreen"> 
+    <div class="lockscreen-wrapper" >
+
+      <div class="lockscreen-logo pb-0">
+        <img src="/assets/img/logo.png"/> 
+
+      </div>
+       
+      <div class="lockscreen-item">
+        <div class="card-body register-card-bodyd">
+          <p class="login-box-msg">เข้าสู่ระบบ</p>
+
+          <div class="input-group mb-3">
+            <input type="text" name="user" class="form-control" autocomplete="nope" placeholder="Full name" />
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              autocomplete="nope"
+              placeholder="Email"
+            />
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a onclick="confirmPasscode()" type="button" class="btn btn-block btn-primary text-center" data-toggle="modal" data-target="#passcode">
+                <i class="fab fa-solid fa-paper-plane mr-2 float-start"></i>
+                เข้าสู่ระบบด้วยอีเมล์</a> 
+              <p class="text-info-mail text-xs">
+                หากไม่พบเมล์ที่กล่องขาเข้า (Inbox) ลองตรวจสอบที่ junk mail
+              </p>
+            </div>
+          </div>
+
+          <div class="social-auth-links text-center mt-2 mb-3">
+            <a href="/auth/facebook" class="btn btn-block btn-primary">
+              <i class="fab fa-google mr-2 float-start"></i>
+              เข้าสู่ระบบด้วย Facebook
+            </a>
+            <a href="/auth/google" class="btn btn-block btn-danger">
+              <i class="fab fa-facebook-f mr-2 float-start"></i>
+              เข้าสู่ระบบด้วย Google
+            </a>
+            <a href="/auth/line" class="btn btn-block btn-success">
+              <i class="fab fa-line mr-2 float-start"></i>
+              เข้าสู่ระบบด้วย LINE
+            </a>
+          </div>
+
+        </div>       
+      </div>     
+    </div>  
+ 
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/assets/js/document/auth.js"></script> 
+    <script src="/assets/js/adminlte.min.js"></script>
+
+  </body>
+  <footer class="text-xs text-secondary  text-center">
+    Copyright &copy; PIEN CORPORATION CO., LTD
+  </footer>
+  
+</html>

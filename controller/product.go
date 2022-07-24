@@ -2,9 +2,11 @@ package controller
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 	"path/filepath"
+	"piennews/controller/sidebar"
 	"piennews/helper/jwt"
 	"piennews/helper/logs"
 	"piennews/helper/util"
@@ -15,6 +17,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
+
+func (ct *controller) Product(c *gin.Context) {
+
+	h := c.MustGet("headers").(models.Header)
+	uuid := jwt.ExtractClaims(h.Token, "uuid")
+
+	customer, exist := services.NewService().GetCustomerWithUUID(uuid)
+	name, profile := sidebar.GetUserSidebar(customer, exist)
+	c.HTML(http.StatusOK, "product.html", gin.H{
+		"customer": gin.H{
+			"name":    template.HTML(name),
+			"profile": profile,
+		},
+	})
+
+}
 
 func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) {
 	logbody := ""

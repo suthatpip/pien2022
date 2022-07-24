@@ -46,8 +46,13 @@ func NewInternalLogs(params *LogInternalParams) InternalLogs {
 }
 
 func (app *LogInternalParams) WriteInternalLogs() {
-
-	user_id := jwt.ExtractClaims(app.Context.MustGet("headers").(models.Header).Token, "uuid")
+	v, exits := app.Context.Get("headers")
+	user_id := ""
+	if exits {
+		user_id = jwt.ExtractClaims(v.(models.Header).Token, "uuid")
+	} else {
+		user_id = app.Context.Query("auth")
+	}
 
 	internalLog.WithFields(log.Fields{
 		"time":        app.Begin.Format("2006-01-02 15:04:05.000"),
