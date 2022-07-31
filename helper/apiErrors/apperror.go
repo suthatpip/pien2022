@@ -3,18 +3,18 @@ package apiErrors
 import "net/http"
 
 const (
-	ServerError     = "SERVER_ERROR"
-	ApiUnauthorized = "API_UNAUTHORIZED"
-	ApiBadRequest   = "API_BAD_REQUEST"
+	ServiceUnavailable = "SERVICE_UNAVAILABLE"
+	ApiUnauthorized    = "API_UNAUTHORIZED"
+	ApiBadRequest      = "API_BAD_REQUEST"
 )
 
 var (
 	apiErrors = []apiError{
 		{
-			Id:      ServerError,
+			Id:      ServiceUnavailable,
 			Message: "The server encountered an unexpected condition that prevented it from fulfilling the request.",
 			Code:    1250,
-			Status:  http.StatusInternalServerError,
+			Status:  http.StatusServiceUnavailable,
 		},
 		{
 			Id:      ApiUnauthorized,

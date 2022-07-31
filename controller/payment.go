@@ -3,9 +3,9 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"piennews/helper/apiErrors"
 	"piennews/helper/config"
 	"piennews/helper/jwt"
-	"piennews/helper/logs"
 	"piennews/helper/util"
 	"piennews/models"
 	"piennews/services"
@@ -18,30 +18,18 @@ import (
 )
 
 func (ct *controller) InitPayment(c *gin.Context, v *models.InitPaymentModel) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	payment_code, err := setPayment(v)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusBadRequest)
+
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 	summary, err := services.NewService().GetPaymentDetail(payment_code, uuid)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 
@@ -49,46 +37,27 @@ func (ct *controller) InitPayment(c *gin.Context, v *models.InitPaymentModel) {
 }
 
 func (ct *controller) DeleteInitPayment(c *gin.Context, del *models.DeleteInitPayment) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 
-	services.NewService().DeletePayment(del, uuid)
+	err := services.NewService().DeletePayment(del, uuid)
+	if err != nil {
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
+		return
+	}
 
 	c.Status(http.StatusOK)
 }
 
 func (ct *controller) DeleteInitAllPayment(c *gin.Context, del *models.DeleteInitPayment) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 
 	err := services.NewService().DeleteProductAndPayment(del, uuid)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 	c.Status(http.StatusOK)

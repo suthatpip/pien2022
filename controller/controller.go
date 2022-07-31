@@ -12,9 +12,12 @@ type controllerInterface interface {
 	InitPayment(c *gin.Context, v *models.InitPaymentModel)
 	DeleteInitPayment(c *gin.Context, del *models.DeleteInitPayment)
 	DeleteInitAllPayment(c *gin.Context, del *models.DeleteInitPayment)
+
 	CompanyList(c *gin.Context)
-	CompanyNew(c *gin.Context, com *models.CompanyModel)
+	NewCompany(c *gin.Context, company *models.CompanyModel)
 	CompanyNewLogo(c *gin.Context, com *models.CompanyModel)
+	UpdateCompany(c *gin.Context, company *models.CompanyModel)
+
 	UploadFile(c *gin.Context)
 	Product(c *gin.Context)
 	GetProduct(c *gin.Context)
@@ -28,8 +31,14 @@ type controllerInterface interface {
 
 	Auth(c *gin.Context, provider string)
 	Email(c *gin.Context, name string, email string)
+
+	ConfirmCode(c *gin.Context, passcode string, code string)
+	Confirm(c *gin.Context, passcode string)
+	LoginReady(c *gin.Context, cnfcode string)
+
 	Account(c *gin.Context)
-	Confirm(c *gin.Context, passcode string, code string)
+	UploadCompanyLogo(c *gin.Context, company_code string)
+	DeleteCompany(c *gin.Context, company *models.CompanyModel)
 }
 
 type controller struct {

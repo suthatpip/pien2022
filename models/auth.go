@@ -10,6 +10,11 @@ type Login struct {
 }
 
 type ConfirmCode struct {
-	Passcode string `uri:"passcode" binding:"required"`
-	Code     string `uri:"code" binding:"required"`
+	Passcode    string `uri:"passcode" binding:"required"`
+	Code        string `uri:"code"`
+	ConfirmCode string `uri:"confirm"`
+}
+
+type Confirm struct {
+	Passcode string `uri:"passcode" `
 }

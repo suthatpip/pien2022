@@ -25,7 +25,6 @@ func AuthRequired() gin.HandlerFunc {
 		uuid := jwt.ExtractClaims(v.Value, "uuid")
 		_, exist := services.NewService().GetCustomerWithUUID(uuid)
 		if !exist {
-			//c.AbortWithStatus(http.StatusUnauthorized)
 			c.Redirect(http.StatusTemporaryRedirect, "/auth")
 			return
 		}

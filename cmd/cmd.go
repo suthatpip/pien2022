@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"net/http"
 	"piennews/helper/jwt"
+	"piennews/middleware"
 	routers "piennews/routes"
 	"time"
 
@@ -12,21 +12,22 @@ import (
 
 func Run() {
 	router := gin.New()
-	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
-
-		// your custom format
-		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
-			param.ClientIP,
-			param.TimeStamp.Format(time.RFC1123),
-			param.Method,
-			param.Path,
-			param.Request.Proto,
-			param.StatusCode,
-			param.Latency,
-			param.Request.UserAgent(),
-			param.ErrorMessage,
-		)
-	}))
+	router.StaticFile("/favicon.ico", "./assets/img/logo.ico")
+	router.Use(middleware.LogMiddleware(time.Now()))
+	// router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+	// 	// your custom format
+	// 	return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
+	// 		param.ClientIP,
+	// 		param.TimeStamp.Format(time.RFC1123),
+	// 		param.Method,
+	// 		param.Path,
+	// 		param.Request.Proto,
+	// 		param.StatusCode,
+	// 		param.Latency,
+	// 		param.Request.UserAgent(),
+	// 		param.ErrorMessage,
+	// 	)
+	// }))
 	router.Use(gin.CustomRecovery(func(c *gin.Context, recovered interface{}) {
 		c.HTML(http.StatusBadRequest, "404.html", gin.H{
 			"code":    http.StatusInternalServerError,
@@ -42,7 +43,7 @@ func Run() {
 			"message": "",
 		})
 	})
-	// router.Use(middleware.ErrorHandler())
+	router.Use(middleware.ErrorHandler())
 	// router.Use(middleware.AuthHandler())
 
 	router.Static("/assets", "./assets")
@@ -60,13 +61,6 @@ func Run() {
 			MaxAge: maxAge,
 			Path:   "/",
 		})
-	})
-
-	router.GET("/passcode", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "passcode.html", gin.H{
-			"title": "passcode",
-		})
-
 	})
 
 	routers.Gateway(router)

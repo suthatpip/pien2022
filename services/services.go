@@ -18,8 +18,11 @@ type serviceInterface interface {
 
 	DeleteProductAndPayment(p *models.DeleteInitPayment, uuid string) error
 	GetTemplate(code string) ([]interface{}, bool)
-	SaveCompany(com *models.CompanyModel) bool
-	SaveCompanyLogo(com *models.CompanyModel) bool
+
+	NewCompany(com *models.CompanyModel) error
+	UpdateCompanyLogo(com *models.CompanyModel) error
+	UpdateCompany(com *models.CompanyModel) error
+
 	NewProduct(f *models.ProductModel, uuid string) error
 	GetProduct(uuid string) ([]models.ProductModel, error)
 	SubmitProduct(f []models.InitProductModel, uuid string) error
@@ -33,6 +36,14 @@ type serviceInterface interface {
 	GetOrderDetail(pay_code string, uuid string) (*models.SummaryPaymentModel, error)
 
 	Customer(u *models.NewCustomerModel) error
+	GetMyCompany(uuid string) (*[]models.CompanyModel, error)
+	DeleteMyCompany(uuid, code string) error
+
+	NewPasscode(passcode, code, confirm_code, uuid string) error
+	VerifyCode(passcode, code string) (string, string, error)
+	WelcomeHome(cnfcode string) (string, error)
+
+	SendMail(mailTo, url, passcode, code string) error
 }
 
 type service struct {

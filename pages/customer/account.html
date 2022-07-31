@@ -15,11 +15,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/assets/plugins/fontawesome-free-6.1.1/css/all.min.css">
   
+
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="/assets/plugins/dropzone/min/dropzone.min.css">
+
+
+    
   <!-- Custom style -->
   <link rel="stylesheet" href="/assets/css/custom.css">
 
+  <link rel="stylesheet" href="/assets/plugins/sweetalert2/sweetalert2.css"> 
   <!-- Theme style -->
   <link rel="stylesheet" href="/assets/css/adminlte.css">
+
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -99,27 +107,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div>
               <hr class="hr-sidebar">
             </div>
-            <li class="nav-header text-white-50">จัดการข้อมูลส่วนตัว
+            <li class="nav-header text-white-50">กำหนดค่าตั้งต้น
             </li>
 
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-solid fa-circle-user"></i>
-                <p>
-                   ข้อมูลส่วนตัว
-                  <i class="right fas fa-angle-left"></i>
+            <li class="nav-item "> 
+              <a href="/account" class="nav-link active">
+                <i class="nav-icon far fa-circle "></i>
+                <p>ข้อมูลบริษัท
                 </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="/account" class="nav-link  active">
-                    <i class="nav-icon far fa-circle text-info"></i>
-                    <p>บัญชีของฉัน
-                    </p>
-                  </a>
-                </li>
-              </ul>
+              </a> 
             </li>
+            
             <div>
               <hr class="hr-sidebar">
             </div>
@@ -178,92 +176,94 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a href="/logout" class="btn btn-secondary hide-on-collapse pos-right text-sm">Logout</a>
       </div>
     </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+ 
+    <div class="content-wrapper" style="min-height: 2646.44px;">
       <!-- Content Header (Page header) -->
-      <div class="content-header">
+      <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <b>
-                <h1 class="m-0">Profile</h1>
-              </b>
+              <h1>โปรไฟล์</h1>
             </div>
-          </div><!-- /.row -->
+           
+          </div>
         </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
+      </section>
+  
       <!-- Main content -->
       <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-3">  
-                <div class="card   ">
-                  <div class="card-body">
-                    <div class="text-center"> 
-                          <img class=" img-fluid img-circle hvr-bounce-to-top" src="/assets/img/user3-128x128.jpg"
-                          alt="User profile picture"> 
-                          <h3 class="profile-username text-center">Nina Mcintire
-                        <i class="fas fa-solid fa-pencil text-secondary text-sm"></i>
-                      </h3>
-                      <p class="text-muted text-center">089-969xxx6</p>
+  
+        <!-- Default box -->
+        <div class="card card-solid">
+          <div class="card-header">
+            <h3 class="card-title">รายละเอียด</h3>
+  
+            <div class="card-tools"> 
+              <button type="button"  onclick="new_company()"
+                class="btn btn-default btn-sm checkbox-toggle bg-info ">
+              <i class="fa fa-plus "></i>
+              </button>  
+            </div>
+          </div>
+          <div class="card-body pb-0">
+            <div class="row">
+
+
+              {{ range .companys }}
+
+              <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                <div class="card bg-light d-flex flex-fill ">
+                  <div class="ml-3 my-2 text-bold lead card-headers text-muted border-bottom-0">
+                    {{ .Name }}
+                  </div>
+                 
+                  <div class="card-body pt-0">
+                    <div class="row">
+                      <div class="col-7"> 
+                        <p class="text-muted text-sm pt-3"><b>หมายเหตุ:  </b> {{ .About }} </p>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> ที่อยู่: {{ .Address }}</li>
+                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> เบอร์โทร #: {{ .Telephone }}</li>
+                        </ul>
+                        
+                      </div>
+                      <div class="col-5 text-center float-right">
+                        <img src=" {{ .Logo }}" 
+                        alt="user-avatar img-circle" 
+                        class="img-circle img-fluid" 
+                        onerror="this.src='/assets/img/48x48.png';">
+                      </div>
+                      
                     </div>
                   </div>
-                </div> 
-            </div>
-          <div class="col-md-9">            
-              <div class="content ">
-                <div class="container-fluid   flex-column mb-3">
-                  <div class="card card-secondary">
-                    <div class="card-header">
-                      <h3 class="card-title">ข้อมูลส่วนตัว</h3>
+                  <h2 class="small-xs ml-4 text-muted "><b>ถูกสร้างเมื่อ </b> {{ .Create_Date }} </h2>
+                  <div class="card-footer ">
+                    
+                    <div class="text-right">
+                      <button type="button"  onclick="edit_company('{{ .Name }}','{{ .Telephone }}','{{ .Address }}','{{ .Logo }}','{{ .About }}','{{ .Code }}' )"
+                         class="btn btn-default btn-sm checkbox-toggle text-gray">                               
+                        <i class="fa fa-pencil"></i>
+                        </button> 
+
+                        <button type="button"  onclick="delete_company('{{.Code}}', '{{.Name}}')"  class="btn btn-default btn-sm text-gray"  >
+                        <i class="far fa-trash-alt"></i>
+                        </button>
                     </div>
-                    <form>
-                      <div class="card-body">
-                        <div class="form-group">
-                          <label for="exampleInputEmail1">ชื่อ:</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter...">
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">นามสกุล:</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter...">
-                        </div>
-                        <div class="form-group">
-                          <label>หมายเลขโทรศัพท์:</label>
-
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            </div>
-                            <input type="text" class="form-control"
-                              data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label>ที่อยู่สำหรับออกใบกำกับภาษี</label>
-                          <textarea class="form-control" rows="3" placeholder="Enter ..." maxlength="500"></textarea>
-                        </div>
-
-                      </div>
-
-
-                      <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
-                      </div>
-                    </form>
                   </div>
                 </div>
               </div>
-            </div>
-           
-        </div>
 
-    </div>
-      </section>
-    </div>
-    <!-- Main Footer -->
+              {{end}}
+               
+              
+            </div>
+          </div> 
+          <div class="card-footer"> 
+          </div> 
+        </div> 
+  
+      </section> 
+    </div> 
     <footer class="main-footer">
       Copyright &copy; PIEN CORPORATION CO., LTD
     </footer>
@@ -271,64 +271,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <script src="/assets/plugins/jquery/jquery.min.js"></script>
   <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/plugins/chart.js/Chart.min.js"></script>
+  <script src="/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <script src="/assets/plugins/dropzone/dropzone.js"></script>
+  <script src="/assets/js/account.js"></script>
   <script src="/assets/js/adminlte.min.js"></script>
-  <script>
-    $(function () {
-
-
-      var areaChartData = {
-        labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16',
-          '17', '18', '19', '20', '21', '22', '23'
-        ],
-        datasets: [{
-          label: 'Electronics',
-          backgroundColor: 'rgba(210, 214, 222, 1)',
-          borderColor: 'rgba(210, 214, 222, 1)',
-          pointRadius: false,
-          pointColor: 'rgba(210, 214, 222, 1)',
-          pointStrokeColor: '#c1c7d1',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data: [65, 59, 80, 81, 56, 55, 40, 28, 48, 40, 19, 86, 27, 90, 55, 40, 28, 48, 40, 19, 48, 40, 19]
-        }, ]
-      }
-
-      var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: false,
-            }
-          }],
-          yAxes: [{
-            gridLines: {
-              display: false,
-            }
-          }]
-        }
-      }
-
-      var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-      var lineChartOptions = $.extend(true, {}, areaChartOptions)
-      var lineChartData = $.extend(true, {}, areaChartData)
-      lineChartData.datasets[0].fill = false;
-
-      lineChartOptions.datasetFill = false
-
-      var lineChart = new Chart(lineChartCanvas, {
-        type: 'line',
-        data: lineChartData,
-        options: lineChartOptions
-      })
-
-    })
-  </script>
+   
 </body>
 
 </html>

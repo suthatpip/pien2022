@@ -84,3 +84,8 @@
 .bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
   border-left-color: #2C3E50 !important;
 }
+
+.small-xs {
+  font-size: 75%;
+  font-weight: 370;
+}

@@ -16,7 +16,8 @@ import (
 )
 
 func Login(rg *gin.RouterGroup) {
-	url := config.GetENV().ENVIRONMENT
+
+	url := config.GetENV().URL
 
 	key := "pien"        // Replace with your SESSION_SECRET or similar
 	maxAge := 86400 * 30 // 30 days
@@ -37,9 +38,11 @@ func Login(rg *gin.RouterGroup) {
 	)
 
 	rg.GET("/", func(c *gin.Context) {
+
 		c.HTML(http.StatusOK, "login.html", gin.H{
 			"title": "login",
 		})
+
 	})
 
 	rg.GET("/:provider", func(c *gin.Context) {
@@ -61,6 +64,7 @@ func Login(rg *gin.RouterGroup) {
 	})
 
 	rg.GET("/:provider/callback", func(c *gin.Context) {
+
 		var p models.Provider
 
 		if err := c.ShouldBindUri(&p); err != nil {
@@ -76,7 +80,37 @@ func Login(rg *gin.RouterGroup) {
 
 	})
 
-	rg.POST("/passcode", func(c *gin.Context) {
+	rg.GET("/passcode/:passcode", func(c *gin.Context) {
+
+		var p models.Confirm
+
+		if err := c.ShouldBindUri(&p); err != nil {
+			c.HTML(http.StatusBadRequest, "error.html", gin.H{
+				"code":    http.StatusBadRequest,
+				"pienweb": "/",
+				"message": err.Error(),
+			})
+			return
+		}
+
+		controller.NewController().Confirm(c, p.Passcode)
+
+	})
+
+	rg.GET("/ready/:passcode/:confirm", func(c *gin.Context) {
+
+		login := &models.ConfirmCode{}
+
+		if err := c.ShouldBindUri(&login); err != nil {
+			c.JSON(500, gin.H{"status": err.Error()})
+			return
+		}
+
+		controller.NewController().LoginReady(c, login.ConfirmCode)
+
+	})
+
+	rg.POST("/newpasscode", func(c *gin.Context) {
 
 		login := &models.Login{}
 
@@ -99,7 +133,7 @@ func Login(rg *gin.RouterGroup) {
 			return
 		}
 
-		controller.NewController().Confirm(c, login.Passcode, login.Code)
+		controller.NewController().ConfirmCode(c, login.Passcode, login.Code)
 
 	})
 

@@ -9,8 +9,9 @@ const Token_expire int64 = 86400 * 30
 
 type Env struct {
 	OWNER       string `env-default:"piennews"`
-	ENVIRONMENT string `env:"ENVIRONMENT" env-default:"http://piennews001.thddns.net:3030"`
+	URL         string `env:"URL" env-default:"http://piennews001.thddns.net:3030"`
 	SECRET      string `env:"SECRET" env-default:"secert"`
+	ENVIRONMENT string `env:"ENVIRONMENT" env-default:"dev"`
 }
 
 var cfg Env

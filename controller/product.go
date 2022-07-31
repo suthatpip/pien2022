@@ -7,12 +7,11 @@ import (
 	"os"
 	"path/filepath"
 	"piennews/controller/sidebar"
+	"piennews/helper/apiErrors"
 	"piennews/helper/jwt"
-	"piennews/helper/logs"
 	"piennews/helper/util"
 	"piennews/models"
 	"piennews/services"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -35,17 +34,6 @@ func (ct *controller) Product(c *gin.Context) {
 }
 
 func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
@@ -57,8 +45,7 @@ func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) 
 		Product_Type:   "template",
 		Template_code:  product.Template_code,
 	}, uuid); err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 
@@ -67,23 +54,11 @@ func (ct *controller) CustomeFile(c *gin.Context, product *models.ProductModel) 
 }
 
 func (ct *controller) UploadFile(c *gin.Context) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	form, err := c.MultipartForm()
 
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusBadRequest)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 	h := c.MustGet("headers").(models.Header)
@@ -95,9 +70,9 @@ func (ct *controller) UploadFile(c *gin.Context) {
 		extension := filepath.Ext(file.Filename)
 		newFileName := uuid.New().String() + extension
 		full_path := path + "/" + newFileName
-		logbody = fmt.Sprintf("%v -> %v", file.Filename, full_path)
+		// logbody = fmt.Sprintf("%v -> %v", file.Filename, full_path)
 		if err := c.SaveUploadedFile(file, "."+path+"/"+newFileName); err != nil {
-			c.Status(http.StatusFailedDependency)
+			c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 			return
 		}
 		if err := services.NewService().NewProduct(&models.ProductModel{
@@ -107,8 +82,7 @@ func (ct *controller) UploadFile(c *gin.Context) {
 			Product_Detail: full_path,
 			Product_Type:   "file",
 		}, user_id); err != nil {
-			logerror = err.Error()
-			c.Status(http.StatusServiceUnavailable)
+			c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 			return
 		}
 	}
@@ -116,25 +90,13 @@ func (ct *controller) UploadFile(c *gin.Context) {
 }
 
 func (ct *controller) GetProduct(c *gin.Context) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	user_id := jwt.ExtractClaims(h.Token, "uuid")
 
 	files, err := services.NewService().GetProduct(user_id)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 
@@ -142,22 +104,10 @@ func (ct *controller) GetProduct(c *gin.Context) {
 }
 
 func (ct *controller) DeleteProduct(c *gin.Context, products *models.ProductsModel) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 	for _, v := range products.Products {
-		fmt.Printf("%v %v\n", &v, uuid)
 		services.NewService().DelProduct(&v, uuid)
 	}
 

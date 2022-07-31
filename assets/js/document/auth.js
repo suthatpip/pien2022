@@ -5,7 +5,7 @@ var url = location.protocol + '//' + location.host;
         email: "aloha@test.com" 
     })
  
-    fetch(url + '/auth/passcode', {
+    fetch(url + '/auth/newpasscode', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ var url = location.protocol + '//' + location.host;
             return response.json();
         })
         .then(function (data) { 
-            console.log(data.passcode);
+           
             popup(data.passcode, "");
  
         })         
@@ -29,31 +29,23 @@ var url = location.protocol + '//' + location.host;
 }
 
 async function popup(passcode, message){
-
- 
-    Swal.fire({
+     Swal.fire({
         title: 'กรอกรหัส 4 หลัก ที่ได้รับจากอีเมล์',
-        inputLabel: 'Your age',
-        
+        inputLabel: 'Your age',   
         html:        
-        `<div class="flex-container">  
+        ` <p class="text-xs text-secondary text-center">code: ` + passcode + `</p>  
+        <div class="flex-container">  
             <div class="input-group input-group-lg">              
-                <input id="input1" type="text" class="form-control" minlength="1" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-            </div>
-        
-            <div class="input-group input-group-lg">              
-                <input id="input2" type="text" class="form-control" minlength="1" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-            </div>
-      
-            <div class="input-group input-group-lg">              
-                <input id="input3" type="text" class="form-control" minlength="1" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-            </div>
-       
-            <div class="input-group input-group-lg">              
-                <input id="input4" type="text" class="form-control" minlength="1" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                <input id="input1"  type="text" focus class="form-control _passcode" minlength="1" maxlength="1"  >
+                       
+                <input id="input2" type="text" class="form-control _passcode" minlength="1" maxlength="1"   >
+                       
+                <input id="input3" type="text" class="form-control _passcode" minlength="1" maxlength="1" >
+                   
+                <input id="input4" type="text" class="form-control _passcode" minlength="1" maxlength="1" >
             </div>
             <input type="hidden" id="passcode" value="` + passcode + `">
-        </div>` ,
+        </div>`  ,
         
         inputAttributes: {
           autocapitalize: 'off'
@@ -64,13 +56,23 @@ async function popup(passcode, message){
         confirmButtonColor:"#007bff",
         allowOutsideClick: false,
         showLoaderOnConfirm: true,
+        willOpen:() =>{ 
+
+          const inputElements = document.getElementsByClassName('_passcode');
+          for (let inputElement of inputElements) {           
+              inputElement.addEventListener('keydown',enforceFormat);
+              inputElement.addEventListener('keyup',nextElement);
+          } 
+        },
         didOpen: () => {
             if (message.length != 0) { 
                 Swal.showValidationMessage(
                     message
-                ) 
+                );
+               
             }
-        },
+            document.getElementById("input1").focus();
+        }, 
         preConfirm: () => {  
            let passcode=document.getElementById('passcode').value;        
            let d1=document.getElementById('input1').value;    
@@ -82,8 +84,9 @@ async function popup(passcode, message){
            
             if (code.length != 4) { 
                 Swal.showValidationMessage(
-                    `กรอกรหัสไม่ครบ`
+                    `กรอกรหัสไม่ครบ`                    
                 ) 
+                clear();                
             }else{ 
                 return fetch(`/auth/passcode/`+ passcode +`/`+ code, {
                     method: 'POST',
@@ -92,39 +95,79 @@ async function popup(passcode, message){
                     }
                 })
                 .then(response => {
-                  if (!response.ok) {
+                  if (!response.ok) {                   
                     throw new Error(response.statusText)
                   }
                   return response.json()
                 })
                 .catch(error => {
                   Swal.showValidationMessage(
-                    `รหัสไม่ถูกต้อง`
-                  )
+                    `พบความผิดพลาด`
+                  )                 
+                  clear();
                 })
             } 
             return false;
         },
         // allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {  
-          if (!result.isConfirmed) {
-            console.log("OK");
-          }else{
-            console.log(result.passcode);
-            popup(result.passcode, "รหัสไม่ถูกต้อง");
-          }
+      }).then((result) => { 
+        if (!result.isDismissed)  { 
+          if (result.isConfirmed) {            
+            if(result.value.result=="INVALID"){               
+              popup(result.value.passcode, "รหัสไม่ถูกต้อง"); 
+            } else if(result.value.result=="BLOCK"){  
+              Swal.fire({
+                icon: 'error',
+                title: 'ระบบยกเลิกรหัสนี้',
+                text: '!!คุณสามารถขอรหัสใหม่ได้หลังจากนี้!!', 
+              })
+            } else if(result.value.result=="VALID"){              
+              auth(result.value.passcode, result.value.confirm);
+            }else{
+              popup(result.value.passcode, "พบความผิดพลาด"); 
+            }      
+          } 
+        }          
       })
 
+} 
+function auth(passcode, confirm){
+  console.log(passcode,'  === ', confirm);  
+  window.location.href = "/auth/ready/" + passcode + '/'+ confirm;
 }
 
-const getCode = (e) => {
-    e = e || window.event;
-    return e.key;
-  };
-  const handleKeyPress = (e) => {
-    const key = getCode(e);
-    if (isFinite(key)) {
-      console.log(`Number ${key} was pressed!`);
+function clear(){ 
+  const inputElements = document.getElementsByClassName('_passcode');
+  for (let inputElement of inputElements) {
+     
+      inputElement.value="";
+  }
+  document.getElementById("input1").focus();
+}
+
+const isNumericInput = (event) => {
+	const key = event.keyCode; 
+	return ((key >= 48 && key <= 57)|| (key >= 96 && key <= 105));
+   
+};
+ 
+const enforceFormat = (event) => { 
+    if(!isNumericInput(event)){       
+        event.preventDefault();
     }
-  };
-  
+};
+
+const nextElement = (event) => {
+  var  ob = event.target;
+  if(isNumericInput(event)){ 
+    if(ob.nextElementSibling != null){   
+      ob.nextElementSibling.focus();
+    }else {            
+      
+      ob.parentNode.children[0].focus();
+    }
+  }
+ 
+}
+
+

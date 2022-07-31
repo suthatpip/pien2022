@@ -4,34 +4,22 @@ import (
 	"html/template"
 	"net/http"
 	"piennews/controller/sidebar"
+	"piennews/helper/apiErrors"
 	"piennews/helper/jwt"
-	"piennews/helper/logs"
 	"piennews/models"
 	"piennews/services"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (ct *controller) Dashboard(c *gin.Context, status ...string) {
-	logbody := ""
-	logerror := ""
 
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 
 	summary, err := services.NewService().Dashboard(uuid, status)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 
@@ -53,24 +41,14 @@ func (ct *controller) Dashboard(c *gin.Context, status ...string) {
 }
 
 func (ct *controller) DashboardOrderDetail(c *gin.Context, payment_code string) {
-	logbody := ""
-	logerror := ""
 
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 	h := c.MustGet("headers").(models.Header)
 	uuid := jwt.ExtractClaims(h.Token, "uuid")
 
 	summary, err := services.NewService().GetOrderDetail(payment_code, uuid)
 	if err != nil {
-		logerror = err.Error()
-		c.Status(http.StatusServiceUnavailable)
+
+		c.Error(apiErrors.ThrowError(apiErrors.ServiceUnavailable, err))
 		return
 	}
 	c.JSON(http.StatusOK, summary)

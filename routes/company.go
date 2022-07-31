@@ -31,17 +31,10 @@ func Company(rg *gin.RouterGroup) {
 			return
 		}
 
-		controller.NewController().CompanyNew(c, v)
+		controller.NewController().NewCompany(c, v)
 	})
 
 	rg.POST("/logo", func(c *gin.Context) {
-		// fmt.Println("/logo/:code")
-		// var company models.CompanyModel
-		// if err := c.ShouldBindUri(&company); err != nil {
-		// 	c.Status(http.StatusBadRequest)
-		// 	return
-		// }
-
 		form, err := c.MultipartForm()
 		if err != nil {
 			c.Status(http.StatusBadRequest)

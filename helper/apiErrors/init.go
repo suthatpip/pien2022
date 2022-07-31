@@ -1,5 +1,7 @@
 package apiErrors
 
+import "piennews/helper/config"
+
 type apiError struct {
 	Id      string
 	Message string
@@ -42,11 +44,18 @@ func findErrorById(errorId string) *apiError {
 	return nil
 }
 
-func ThrowError(errorId string) *apiError {
-	if err := findErrorById(errorId); err != nil {
-		return err
+func ThrowError(errorId string, e error) *apiError {
+
+	if config.GetENV().ENVIRONMENT != "dev" {
+		if err := findErrorById(errorId); err != nil {
+			return err
+		}
 	}
-	panic("Error To Throw Not Defined")
+	return &apiError{
+		Id:      "0000",
+		Message: e.Error(),
+	}
+
 }
 
 func ParseError(err error) *apiError {

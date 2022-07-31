@@ -15,17 +15,6 @@ import (
 )
 
 func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPayment) {
-	logbody := ""
-	logerror := ""
-
-	defer func(begin time.Time) {
-		logs.InternalLogs(&logs.LogInternalParams{
-			Begin:   begin,
-			Context: c,
-			Body:    logbody,
-			Error:   logerror,
-		}).WriteInternalLogs()
-	}(time.Now())
 
 	h := c.MustGet("headers").(models.Header)
 	user_id := jwt.ExtractClaims(h.Token, "uuid")
@@ -34,14 +23,13 @@ func (ct *controller) ConfirmPayment(c *gin.Context, submit *models.SubmitPaymen
 
 	pay, err := services.NewService().GetPaymentDetail(submit.Payment_code, user_id)
 	if err != nil {
-		logerror = err.Error()
 		c.HTML(http.StatusOK, "error.html", gin.H{})
 		return
 	}
 
 	ref_no, err := services.NewService().NewInitPaysolution(submit.Payment_code)
 	if err != nil {
-		logerror = err.Error()
+
 		c.HTML(http.StatusOK, "error.html", gin.H{})
 		return
 	}
